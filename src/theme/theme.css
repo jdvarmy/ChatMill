@@ -1,0 +1,59 @@
+:root {
+  /* colors */
+  --color-bg-primary: #8c7cf0;
+  --color-bg-default: #070c27;
+  --color-bg-secondary: #111633;
+
+  --color-primary: #9ea4c1;
+  --color-secondary: #cbccd2;
+  --color-ghost: #cbccd2b3;
+  --color-white: #fff;
+
+  --color-success: #44d600;
+  --color-warning: #ffa319;
+  --color-alert: #ff1943;
+  --color-link: #33c2ff;
+
+  /* sizes */
+  --size-text-s: 14px;
+  --size-text-m: 16px;
+  --size-text-l: 20px;
+  --size-text-xl: 24px;
+  --size-text-xxl: 28px;
+
+  /* width */
+  --font-weight-text-light: 400;
+  --font-weight-text-regular: 500;
+  --font-weight-text-semibold: 600;
+  --font-weight-text-bold: 700;
+
+  /* line height*/
+  --font-line-height-m: 1.4em;
+  --font-line-height-l: 1.75;
+
+  /* spaces */
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 20px;
+  --space-xl: 24px;
+  --space-xxl: 34px;
+  --space-xxxl: 70px;
+
+  /* border */
+  --border-radius-m: 6px;
+
+  /* shadow */
+  --shadow-box: 0 0 2px #6a7199;
+
+  /* transitions */
+  --element-transition-function: cubic-bezier(0, 0, 0.2, 1) 0ms;
+  --element-transition-fast: 200ms var(--element-transition-function);
+  --element-transition-slow: 200ms var(--element-transition-function);
+
+
+  /* fonts */
+  --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
