@@ -13,6 +13,7 @@
   "devDependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/config-default": "^2.7.0",
+    "@parcel/transformer-inline-string": "^2.7.0",
     "@parcel/transformer-typescript-tsc": "^2.7.0",
     "@types/express": "^4.17.14",
     "@typescript-eslint/eslint-plugin": "^5.39.0",

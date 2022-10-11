@@ -1,0 +1,13 @@
+h1,
+h2 {
+  font-weight: var(--font-weight-text-bold);
+  line-height: var(--font-line-height-s);
+  margin: var(--space-m) 0;
+  color: var(--color-secondary);
+}
+h1 {
+  font-size: var(--size-text-xxl);
+}
+h2 {
+  font-size: var(--size-text-xl);
+}

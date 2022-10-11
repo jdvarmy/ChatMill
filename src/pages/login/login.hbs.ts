@@ -5,7 +5,7 @@ type Props = {
   title?: string;
 };
 
-export default function loginHbs(props?: Props | undefined) {
+export default function loginHbs(props?: Props | undefined): string {
   return `
     <div class="{{css.content}}">
       ${card(props)}

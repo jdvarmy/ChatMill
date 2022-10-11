@@ -28,7 +28,8 @@
   --font-weight-text-bold: 700;
 
   /* line height*/
-  --font-line-height-m: 1.4em;
+  --font-line-height-s: 1.2;
+  --font-line-height-m: 1.4;
   --font-line-height-l: 1.75;
 
   /* spaces */
