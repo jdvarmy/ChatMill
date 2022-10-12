@@ -10,7 +10,7 @@ import css from './button.css';
  */
 export function button(): void {
   const template = Handlebars.compile(
-    `<button style="{{style}}" name="{{name}}" class="${css.button}">{{text}}</button>`,
+    `<button style="{{style}}" name="{{name}}" class="${css.button}" type="button">{{text}}</button>`,
   );
 
   Handlebars.registerPartial('button', template);

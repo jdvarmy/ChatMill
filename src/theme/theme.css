@@ -21,7 +21,7 @@
   --size-text-xl: 24px;
   --size-text-xxl: 28px;
 
-  /* width */
+  /* weight */
   --font-weight-text-light: 400;
   --font-weight-text-regular: 500;
   --font-weight-text-semibold: 600;
@@ -33,6 +33,7 @@
   --font-line-height-l: 1.75;
 
   /* spaces */
+  --space-xxs: 4px;
   --space-xs: 8px;
   --space-s: 12px;
   --space-m: 16px;
@@ -45,16 +46,16 @@
   --border-radius-m: 6px;
 
   /* shadow */
-  --shadow-box: 0 0 2px #6a7199;
+  --shadow-box-1: 0 0 2px #6a7199;
+  --shadow-box-2: 0px 1px 4px rgb(112 99 192 / 25%), 0px 3px 12px 2px rgb(112 99 192 / 35%);
 
   /* transitions */
   --element-transition-function: cubic-bezier(0, 0, 0.2, 1) 0ms;
   --element-transition-fast: 200ms var(--element-transition-function);
   --element-transition-slow: 200ms var(--element-transition-function);
 
-
   /* fonts */
-  --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-primary: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

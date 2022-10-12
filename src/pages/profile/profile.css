@@ -1,0 +1,131 @@
+@import '../../templates/button/button.css';
+
+.wrapper {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-xl);
+  padding-right: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+}
+.content {
+  flex-basis: 76%;
+  max-width: 76%;
+  flex-direction: row;
+  flex-grow: 0;
+  margin: 0;
+  padding-right: var(--space-xl);
+}
+.menu {
+  flex-basis: 24%;
+  max-width: 24%;
+  flex-direction: row;
+  flex-grow: 0;
+  margin: 0;
+}
+.card-head {
+  display: flex;
+  margin-bottom: var(--space-xl);
+}
+.button {
+  border: 1px solid var(--color-bg-primary);
+  background-color: transparent;
+  padding: var(--space-m);
+  margin: 0 var(--space-m) 0 0;
+}
+.button-icon {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  fill: currentColor;
+  flex-shrink: 0;
+  font-size: 1.6rem;
+  color: var(--color-bg-primary);
+}
+.details-cover-wrapper {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-secondary);
+  border-radius: var(--border-radius-m);
+  box-shadow: var(--shadow-box-1);
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+.details-cover {
+  height: 208px;
+}
+.input-wrapper {
+  position: absolute;
+  right: var(--space-m);
+  bottom: var(--space-m);
+}
+.details-avatar-wrapper {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-secondary);
+  border-radius: var(--border-radius-m);
+  padding: 0;
+  box-shadow: var(--shadow-box-1);
+  position: relative;
+  display: inline-block;
+  margin-top: -72px;
+  margin-left: var(--space-m);
+}
+.details-avatar {
+  width: 128px;
+  height: 128px;
+}
+.details-avatar-img {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  object-fit: cover;
+}
+.change-avatar {
+  position: absolute;
+  width: var(--space-xxl);
+  height: var(--space-xxl);
+  bottom: -8px;
+  right: -8px;
+}
+.change-avatar-button {
+  border-radius: 100%;
+  background: var(--color-bg-primary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-box-2);
+  width: var(--space-xxl);
+  height: var(--space-xxl);
+  min-width: var(--space-xxl);
+  padding: 0;
+}
+.avatar-svg {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  fill: currentColor;
+  font-size: 1.6rem;
+}
+.bio-wrapper {
+  padding-top: var(--space-m);
+  padding-bottom: var(--space-m);
+  padding-left: var(--space-m);
+  margin-bottom: var(--space-xl);
+}
+.head-wrapper {
+  padding-bottom: var(--space-m);
+}
+.content-wrapper{
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--border-radius-m);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-box-1);
+  overflow: hidden;
+}

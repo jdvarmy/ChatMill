@@ -3,7 +3,7 @@
   color: var(--color-secondary);
   border-radius: var(--border-radius-m);
   padding: 0;
-  box-shadow: var(--shadow-box);
+  box-shadow: var(--shadow-box-1);
   overflow: hidden;
 }
 .card-header {

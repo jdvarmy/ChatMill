@@ -15,4 +15,8 @@ html {
 
 body {
   font-family: var(--font-primary);
+  color: var(--color-secondary);
+  font-size: var(--size-text-s);
+  font-weight: var(--font-weight-text-light);
+  line-height: var(--font-line-height-m);
 }

@@ -1,7 +1,9 @@
 h1,
-h2 {
+h2,
+h3,
+h4 {
   font-weight: var(--font-weight-text-bold);
-  line-height: var(--font-line-height-s);
+  line-height: var(--font-line-height-m);
   margin: var(--space-m) 0;
   color: var(--color-secondary);
 }
@@ -10,4 +12,18 @@ h1 {
 }
 h2 {
   font-size: var(--size-text-xl);
+}
+h3 {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--size-text-l);
+}
+h4 {
+  font-size: var(--size-text-m);
+  margin-bottom: var(--space-xxs);
+}
+p {
+  margin: 0;
+  font-weight: var(--font-weight-text-light);
+  font-size: var(--size-text-s);
+  color: var(--color-ghost);
 }
