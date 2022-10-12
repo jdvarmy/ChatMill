@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "start": "npm run build & node ./server",
-    "dev": "parcel static/index.html --dist-dir ./build --no-cache --port 3000",
-    "build": "parcel build static/index.html --no-source-maps --dist-dir ./build"
+    "dev": "parcel static/index.html --no-cache --port 3000",
+    "build": "parcel build static/index.html --no-source-maps"
   },
   "author": "",
   "license": "ISC",

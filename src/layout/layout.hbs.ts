@@ -1,3 +1,3 @@
 export default `
-<div class="{{css.wrapper}}">{{{content}}}</div>
+<main class="{{css.wrapper}}">{{{content}}}</main>
 `;
