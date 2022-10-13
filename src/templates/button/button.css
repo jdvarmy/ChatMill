@@ -1,23 +1,23 @@
-.button{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    border-radius: var(--border-radius-m);
-    font-size: var(--size-text-s);
-    line-height: var(--font-line-height-l);
-    min-width: 64px;
-    padding: var(--space-xs) var(--space-m);
-    margin: var(--space-xs);
-    color: var(--color-white);
-    background-color: var(--color-bg-primary);
-    font-weight: var(--font-weight-text-bold);
-    user-select: none;
-    box-shadow: none;
-    text-transform: none;
-    text-decoration: none;
-    vertical-align: middle;
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  border-radius: var(--border-radius-m);
+  font-size: var(--size-text-s);
+  line-height: var(--font-line-height-l);
+  min-width: 64px;
+  padding: var(--space-xs) var(--space-m);
+  margin: var(--space-xs);
+  color: var(--color-white);
+  background-color: var(--color-bg-primary);
+  font-weight: var(--font-weight-text-bold);
+  user-select: none;
+  box-shadow: none;
+  text-transform: none;
+  text-decoration: none;
+  vertical-align: middle;
 }

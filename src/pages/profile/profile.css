@@ -122,7 +122,7 @@
 .head-wrapper {
   padding-bottom: var(--space-m);
 }
-.content-wrapper{
+.content-wrapper {
   background-color: var(--color-bg-secondary);
   border-radius: var(--border-radius-m);
   padding: var(--space-xl);
