@@ -11,6 +11,8 @@ import status500 from './pages/status500/status500';
 registrationTemplates();
 
 const root = document.querySelector('#root') as HTMLDivElement;
-root.style.height = '100%';
+if (root) {
+  root.style.height = '100%';
 
-root.innerHTML = chat();
+  root.innerHTML = chat();
+}
