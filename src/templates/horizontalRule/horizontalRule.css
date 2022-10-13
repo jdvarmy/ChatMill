@@ -1,0 +1,10 @@
+.horizontal-rule {
+  width: 100%;
+  margin: 0;
+  flex-shrink: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(203, 204, 210, 0.1);
+  height: 1px;
+}
