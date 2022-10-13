@@ -1,0 +1,20 @@
+.content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  padding-top: var(--space-xxxl);
+}
+.padding-top {
+  padding-top: var(--space-xxl);
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}

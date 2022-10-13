@@ -1,0 +1,22 @@
+@import './theme/theme.css';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-secondary);
+  font-size: var(--size-text-s);
+  font-weight: var(--font-weight-text-light);
+  line-height: var(--font-line-height-m);
+}

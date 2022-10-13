@@ -1,0 +1,61 @@
+:root {
+  /* colors */
+  --color-bg-primary: #8c7cf0;
+  --color-bg-default: #070c27;
+  --color-bg-secondary: #111633;
+
+  --color-primary: #9ea4c1;
+  --color-secondary: #cbccd2;
+  --color-ghost: #cbccd2b3;
+  --color-white: #fff;
+
+  --color-success: #44d600;
+  --color-warning: #ffa319;
+  --color-alert: #ff1943;
+  --color-link: #33c2ff;
+
+  /* sizes */
+  --size-text-s: 14px;
+  --size-text-m: 16px;
+  --size-text-l: 20px;
+  --size-text-xl: 24px;
+  --size-text-xxl: 28px;
+
+  /* weight */
+  --font-weight-text-light: 400;
+  --font-weight-text-regular: 500;
+  --font-weight-text-semibold: 600;
+  --font-weight-text-bold: 700;
+
+  /* line height*/
+  --font-line-height-s: 1.2;
+  --font-line-height-m: 1.4;
+  --font-line-height-l: 1.75;
+
+  /* spaces */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 20px;
+  --space-xl: 24px;
+  --space-xxl: 34px;
+  --space-xxxl: 70px;
+
+  /* border */
+  --border-radius-m: 6px;
+
+  /* shadow */
+  --shadow-box-1: 0 0 2px #6a7199;
+  --shadow-box-2: 0px 1px 4px rgb(112 99 192 / 25%), 0px 3px 12px 2px rgb(112 99 192 / 35%);
+
+  /* transitions */
+  --element-transition-function: cubic-bezier(0, 0, 0.2, 1) 0ms;
+  --element-transition-fast: 200ms var(--element-transition-function);
+  --element-transition-slow: 200ms var(--element-transition-function);
+
+  /* fonts */
+  --font-primary: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
