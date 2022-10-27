@@ -1,0 +1,20 @@
+.activeTextFieldLabel,
+.active .activeTextFieldLabel {
+  color: var(--color-bg-primary);
+  transform: translate(14px, -9px) scale(0.75);
+  max-width: calc(133% - var(--space-xl));
+}
+.activeTextFieldFieldset,
+.active .activeTextFieldFieldset {
+  border: 2px solid var(--color-bg-primary);
+}
+.activeTextFieldLegend,
+.active .activeTextFieldLegend {
+  max-width: 100%;
+}
+.activeTextFieldLabel.alertTextField {
+  color: var(--color-alert);
+}
+.activeTextFieldFieldset.alertTextField {
+  border: 2px solid var(--color-alert);
+}

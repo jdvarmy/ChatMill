@@ -1,0 +1,9 @@
+.vertical-rule {
+  flex-shrink: 0;
+  background: rgba(203, 204, 210, 0.1);
+  border: 0;
+  width: 1px;
+  height: 40px;
+  margin: 0 var(--space-m);
+  align-self: center;
+}

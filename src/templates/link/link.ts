@@ -1,6 +1,13 @@
 import Handlebars from 'handlebars';
 import css from './link.css';
 
+export type LinkPropsType = {
+  text: string;
+  href: string;
+  style?: string;
+  button?: boolean;
+};
+
 /**
  * Шаблон ХБС может принимать следующие параметры:
  *

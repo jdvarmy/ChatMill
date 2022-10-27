@@ -1,7 +1,8 @@
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
   font-weight: var(--font-weight-text-bold);
   line-height: var(--font-line-height-m);
   margin: var(--space-m) 0;
@@ -20,6 +21,17 @@ h3 {
 h4 {
   font-size: var(--size-text-m);
   margin-bottom: var(--space-xxs);
+}
+h5 {
+  font-size: var(--size-text-s);
+  margin-top: 0;
+  margin-bottom: var(--space-xxs);
+}
+h6 {
+  font-size: var(--size-text-xs);
+  color: var(--color-ghost);
+  margin-bottom: var(--space-xxs);
+  font-weight: var(--font-weight-text-light);
 }
 p {
   margin: 0;
