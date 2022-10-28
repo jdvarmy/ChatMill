@@ -16,10 +16,11 @@ export function formFieldValidator(e: Event | EventTarget | null, type = 'click'
 
   const fieldProps: Props = {} as Props;
   let target: EventTarget | null = null;
+  let currentEventType = type;
 
   if (e instanceof Event && e.target instanceof HTMLInputElement) {
     target = e.target;
-    type = e.type;
+    currentEventType = e.type;
   }
   if (e instanceof EventTarget) {
     target = e;
@@ -33,17 +34,17 @@ export function formFieldValidator(e: Event | EventTarget | null, type = 'click'
     fieldProps.fieldset = target.nextElementSibling;
     fieldProps.legend = fieldProps.fieldset?.firstElementChild ?? null;
 
-    if (type === 'focus') {
+    if (currentEventType === 'focus') {
       addRemoveClass(fieldProps, 'add');
     }
-    if (type === 'blur' && fieldProps.value === '') {
+    if (currentEventType === 'blur' && fieldProps.value === '') {
       addRemoveClass(fieldProps, 'remove');
       addRemoveAlert(fieldProps, 'remove');
     }
 
     validator(fieldProps);
 
-    if (type === 'click' && fieldProps.value === '') {
+    if (currentEventType === 'click' && fieldProps.value === '') {
       addRemoveClass(fieldProps, 'add');
       addRemoveAlert(fieldProps, 'add');
     }
@@ -57,6 +58,7 @@ function validator(props: Props) {
     return;
   }
 
+  // todo: немного улучшить функцию валидации, сделать так, чтобы она возвращала просто true/false значения и была чистой функцией
   switch (name) {
     case InputNames.login:
       if (value.match(/(?=^[-.\w]{3,20}$)(?!^\d*$)/)) {

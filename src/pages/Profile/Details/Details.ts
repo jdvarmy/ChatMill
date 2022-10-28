@@ -1,4 +1,4 @@
-import Block from '../../../packages/View';
+import View from '../../../packages/View';
 import detailsHbs from './details.hbs';
 import Button from '../../../components/Button/Button';
 
@@ -6,12 +6,12 @@ type Props = {
   button: Button;
 };
 
-export default class Details extends Block {
-  constructor(props: Props) {
+export default class Details extends View<Props> {
+  public constructor(props: Props) {
     super('div', props);
   }
 
-  render(): DocumentFragment {
+  public render(): DocumentFragment {
     return this.compile(detailsHbs());
   }
 }

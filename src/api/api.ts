@@ -1,5 +1,8 @@
 import * as qs from 'qs';
 
+type DataReqType = any;
+type ConfigType = { headers?: Record<string, string>; timeout?: number };
+
 const baseConfig = {
   headers: {
     Accept: 'application/json',
@@ -14,8 +17,18 @@ const enum RequestMethod {
   delete = 'delete',
 }
 
-const baseRequest = <R>({ method, url, ...config }: { method: RequestMethod; url: string }): Promise<R> => {
-  const { headers = baseConfig.headers, data } = config as typeof baseConfig & { data: any };
+const baseRequest = <R>({
+  method,
+  url,
+  data,
+  config,
+}: {
+  method: RequestMethod;
+  url: string;
+  data?: DataReqType;
+  config?: ConfigType;
+}): Promise<R> => {
+  const headers = { ...baseConfig.headers, ...config?.headers };
 
   return new Promise(function (resolve, reject) {
     if (!method) {
@@ -39,7 +52,7 @@ const baseRequest = <R>({ method, url, ...config }: { method: RequestMethod; url
     xhr.onabort = reject;
     xhr.onerror = reject;
 
-    xhr.timeout = 5000;
+    xhr.timeout = config?.timeout ?? 5000;
     xhr.ontimeout = reject;
 
     if (isGet || !data) {
@@ -51,17 +64,19 @@ const baseRequest = <R>({ method, url, ...config }: { method: RequestMethod; url
 };
 
 const requests = {
-  get: <R>(url: string, data?: object, cfg?: any) => {
+  get: <R>(url: string, data?: DataReqType, cfg?: ConfigType) => {
     const queryUrl = data ? `${url}${qs.stringify(data, { addQueryPrefix: true })}` : url;
 
     return baseRequest<R>({ method: RequestMethod.get, url: queryUrl, ...cfg });
   },
 
-  post: <R>(url: string, data?: any, cfg?: any) => baseRequest<R>({ method: RequestMethod.post, url, data, ...cfg }),
+  post: <R>(url: string, data?: DataReqType, cfg?: ConfigType) =>
+    baseRequest<R>({ method: RequestMethod.post, url, data, ...cfg }),
 
-  put: <R>(url: string, data?: any, cfg?: any) => baseRequest<R>({ method: RequestMethod.put, url, data, ...cfg }),
+  put: <R>(url: string, data?: DataReqType, cfg?: ConfigType) =>
+    baseRequest<R>({ method: RequestMethod.put, url, data, ...cfg }),
 
-  delete: <R>(url: string, cfg?: any) => baseRequest<R>({ method: RequestMethod.delete, url, ...cfg }),
+  delete: <R>(url: string, cfg?: ConfigType) => baseRequest<R>({ method: RequestMethod.delete, url, ...cfg }),
 };
 
 export default requests;

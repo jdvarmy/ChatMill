@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import Block from '../../packages/View';
+import View from '../../packages/View';
 import buttonHbs from './button.hbs';
 import css from './button.css';
 import { EventType } from '../../types';
@@ -10,8 +10,8 @@ type Props = {
   events?: EventType<MouseEvent>;
 };
 
-export default class Button extends Block {
-  constructor(props: Props) {
+export default class Button extends View<Props> {
+  public constructor(props: Props) {
     super('button', props);
 
     const element = this.element as HTMLButtonElement;
@@ -20,7 +20,7 @@ export default class Button extends Block {
     element.type = 'button';
   }
 
-  render(): string {
+  public render(): string {
     return Handlebars.compile(buttonHbs())(this.props);
   }
 }

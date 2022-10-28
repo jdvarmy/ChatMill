@@ -1,4 +1,4 @@
-import Block from '../../../packages/View';
+import View from '../../../packages/View';
 import messengerHbs from './messenger.hbs';
 import Button from '../../../components/Button/Button';
 import TextField from '../../../components/TextField/TextField';
@@ -9,14 +9,14 @@ type Props = {
   message: TextField;
 };
 
-export default class Messenger extends Block {
-  constructor(props: Props) {
+export default class Messenger extends View<Props> {
+  public constructor(props: Props) {
     super('div', props);
 
     this.addAttribute({ class: css.messengerContainer });
   }
 
-  render(): DocumentFragment | string {
+  public render(): DocumentFragment | string {
     return this.compile(messengerHbs());
   }
 }

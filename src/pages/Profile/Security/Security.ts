@@ -1,6 +1,6 @@
 import Button from '../../../components/Button/Button';
 import TextField from '../../../components/TextField/TextField';
-import Block from '../../../packages/View';
+import View from '../../../packages/View';
 import securityHbs from './security.hbs';
 
 type Props = {
@@ -10,12 +10,12 @@ type Props = {
   repeatPasswordField: TextField;
 };
 
-export default class Security extends Block {
-  constructor(props: Props) {
+export default class Security extends View<Props> {
+  public constructor(props: Props) {
     super('div', props);
   }
 
-  render(): DocumentFragment {
+  public render(): DocumentFragment {
     return this.compile(securityHbs());
   }
 }

@@ -1,30 +1,19 @@
 import { rootSelector } from '../../types';
 import { renderDOM } from '../../utils/renderDOM';
 import Button from '../../components/Button/Button';
-import { findParentNode } from '../../utils/findParentNode';
 import { formFieldValidator } from '../../utils/formFieldValidator';
 import TextField, { InputNames, InputTypes } from '../../components/TextField/TextField';
 import Card from '../../components/Card/Card';
 import Form from './Form/Form';
 import Registration from './Registration';
+import { handleClick } from '../../utils/handleClick';
 
 export default function renderRegistration(query = rootSelector) {
   const button = new Button({
     text: 'Registration',
     name: 'registration',
     events: {
-      click: (e) => {
-        const form = findParentNode(e.target, 'form') as HTMLFormElement;
-        const data = new FormData(form);
-
-        for (const i of data.entries()) {
-          console.log(`${i[0]}: ${i[1]}`);
-        }
-
-        form.querySelectorAll('input').forEach((input) => {
-          formFieldValidator(input, e.type);
-        });
-      },
+      click: handleClick,
     },
   });
 

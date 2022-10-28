@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import Block from '../../packages/View';
+import View from '../../packages/View';
 import textFieldHbs from './textField.hbs';
 import css from './textField.css';
 import { EventType } from '../../types';
@@ -29,17 +29,17 @@ export type TextFieldProps = {
   label: string;
   inputName: InputNames;
   inputType: InputTypes | string;
-  events?: EventType<FocusEvent>;
+  events?: EventType;
 };
 
-export default class TextField extends Block {
-  constructor(props: TextFieldProps) {
+export default class TextField extends View<TextFieldProps> {
+  public constructor(props: TextFieldProps) {
     super('div', props);
 
     this.addAttribute({ class: css.fieldContainer });
   }
 
-  _addEvents() {
+  protected addEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -47,7 +47,7 @@ export default class TextField extends Block {
     });
   }
 
-  _removeEvents() {
+  protected removeEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -55,7 +55,7 @@ export default class TextField extends Block {
     });
   }
 
-  render(): DocumentFragment | string {
+  public render(): DocumentFragment | string {
     return Handlebars.compile(textFieldHbs())(this.props);
   }
 }

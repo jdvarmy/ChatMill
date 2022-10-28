@@ -2,13 +2,13 @@ import { renderDOM } from '../../utils/renderDOM';
 import { rootSelector } from '../../types';
 import Profile from './Profile';
 import Button from '../../components/Button/Button';
-import Block from '../../packages/View';
-import { findParentNode } from '../../utils/findParentNode';
+import View from '../../packages/View';
 import Details from './Details/Details';
 import UserProfile from './UserProfile/UserProfile';
 import Security from './Security/Security';
 import { formFieldValidator } from '../../utils/formFieldValidator';
 import TextField, { InputNames, InputTypes } from '../../components/TextField/TextField';
+import { handleClick } from '../../utils/handleClick';
 
 const style = 'width: calc(100% - 16px)';
 export enum ContentPage {
@@ -22,27 +22,12 @@ export default function renderProfile(query = rootSelector, contentPage = Conten
     text: 'Save',
     name: 'save',
     events: {
-      click: (e) => {
-        const form = findParentNode(e.target, 'form') as HTMLFormElement;
-        if (form) {
-          const data = new FormData(form);
-
-          for (const i of data.entries()) {
-            console.log(`${i[0]}: ${i[1]}`);
-          }
-
-          form.querySelectorAll('input').forEach((input) => {
-            formFieldValidator(input, e.type);
-          });
-        } else {
-          console.log('form not found');
-        }
-      },
+      click: handleClick,
     },
   });
 
   const fieldEvents = { focus: formFieldValidator, blur: formFieldValidator };
-  let content: Block;
+  let content: View;
   switch (contentPage) {
     case ContentPage.details:
       button.setProps({ text: 'Change cover', name: 'cover' });

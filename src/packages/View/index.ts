@@ -9,56 +9,56 @@ const enum Events {
   cdu = 'component-did-update',
 }
 
-type Props = any;
-type Children = Record<string, Block>;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export default abstract class View<Props extends object = {}> {
+  private readonly id: string;
 
-export default abstract class Block {
-  _id: string;
-  _element: HTMLElement;
-  _meta: { tag: string; props: Props };
-  props: Props;
-  children: Children = {};
-  eventBus: EventBus;
+  protected readonly _element: HTMLElement;
+  protected props: Props;
+  protected children: Props;
+  protected eventBus: EventBus;
 
-  constructor(tag = 'div', propsAndChildren = {}) {
-    const props = this._getChildren(propsAndChildren);
+  protected constructor(tag = 'div', propsAndChildren: Props) {
+    const { props, children } = this.getChildren(propsAndChildren);
     const eventBus = new EventBus();
 
-    this._id = uuid();
-    this._element = this._createDocumentElement(tag);
-    this._meta = { tag, props };
-    this.props = this._makePropsProxy({ ...props, _id: this._id });
-    this.children = this._makePropsProxy({ ...this.children });
+    this.id = uuid();
+    this._element = this.createDocumentElement(tag);
+    this.props = this.makePropsProxy({ ...props, id: this.id });
+    this.children = this.makePropsProxy(children);
     this.eventBus = eventBus;
 
-    this._registerEvents(eventBus);
+    this.registerEvents(eventBus);
     eventBus.emit(Events.init);
   }
 
-  _getChildren(propsAndChildren: Props) {
-    return Object.entries(propsAndChildren).reduce((props, [key, value]) => {
-      if (value instanceof Block) {
-        this.children[key] = value;
-      } else {
-        props[key] = value;
-      }
+  private getChildren(propsAndChildren: Props): { props: Props; children: Props } {
+    return Object.entries(propsAndChildren).reduce(
+      (acc, [key, value]) => {
+        if (value instanceof View) {
+          acc.children[key] = value;
+        } else {
+          acc.props[key] = value;
+        }
 
-      return props;
-    }, {} as Props);
+        return acc;
+      },
+      { props: {}, children: {} } as { props: Props; children: Props },
+    );
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private registerEvents(eventBus: EventBus) {
     eventBus.subscribe(Events.init, this.init.bind(this));
     eventBus.subscribe(Events.cdm, this._componentDidMount.bind(this));
     eventBus.subscribe(Events.cdu, this._componentDidUpdate.bind(this));
     eventBus.subscribe(Events.render, this._render.bind(this));
   }
 
-  init() {
+  private init(): void {
     this.eventBus.emit(Events.render);
   }
 
-  _componentDidMount(): void {
+  private _componentDidMount(): void {
     this.componentDidMount(this.props);
 
     Object.values(this.children).forEach((child) => {
@@ -66,15 +66,15 @@ export default abstract class Block {
     });
   }
 
-  componentDidMount(oldProps: Props): void {
+  public componentDidMount(oldProps: Props): Props {
     return oldProps;
   }
 
-  dispatchComponentDidMount() {
+  public dispatchComponentDidMount() {
     this.eventBus.emit(Events.cdm);
   }
 
-  _componentDidUpdate(oldProps: Props, newProps: Props): void {
+  private _componentDidUpdate(oldProps: Props, newProps: Props): void {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -82,12 +82,12 @@ export default abstract class Block {
     this._render();
   }
 
-  componentDidUpdate(oldProps: Props, newProps: Props): boolean {
+  public componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
     // todo: сделать метод
     return true;
   }
 
-  setProps = (nextProps: Props) => {
+  public setProps = (nextProps: Partial<Props>) => {
     if (!nextProps) {
       return;
     }
@@ -99,15 +99,15 @@ export default abstract class Block {
     return this._element;
   }
 
-  _addEvents() {
-    const { events = {} } = this.props;
+  protected addEvents() {
+    const { events = {} } = this.props as Props;
 
     Object.keys(events).forEach((eventName) => {
       this._element.addEventListener(eventName, events[eventName]);
     });
   }
 
-  _removeEvents() {
+  protected removeEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -115,16 +115,16 @@ export default abstract class Block {
     });
   }
 
-  addAttribute(attr: object): void {
+  public addAttribute(attr: object): void {
     Object.entries(attr).forEach(([key, value]) => {
-      this._element.setAttribute(key, value);
+      this.element.setAttribute(key, value);
     });
   }
 
-  _render() {
+  private _render() {
     const block = this.render();
 
-    this._removeEvents();
+    this.removeEvents();
 
     this._element.innerHTML = '';
     if (typeof block === 'object') {
@@ -133,29 +133,26 @@ export default abstract class Block {
       this._element.innerHTML = block;
     }
 
-    this._addEvents();
+    this.addEvents();
   }
 
   abstract render(): DocumentFragment | string;
 
-  getContent(): HTMLElement {
+  public getContent(): HTMLElement {
     return this.element;
   }
 
-  _makePropsProxy(props: Props) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
-
+  private makePropsProxy(props: Props) {
     return new Proxy(props, {
-      get(target, prop) {
+      get: (target, prop) => {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+      set: (target, prop, value) => {
         target[prop] = value;
 
         // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus.emit(Events.cdu, { ...target }, target);
+        this.eventBus.emit(Events.cdu, { ...target }, target);
         return true;
       },
       deleteProperty() {
@@ -164,27 +161,27 @@ export default abstract class Block {
     });
   }
 
-  _createDocumentElement(tag: string) {
+  protected createDocumentElement(tag: string) {
     const element = document.createElement(tag);
     if (tag === 'template') {
-      element.setAttribute('data-id', this._id);
+      element.setAttribute('data-id', this.id);
     }
     return element;
   }
 
   compile(template: string) {
-    const propsAndStubs: Record<string, Block | string> = { ...this.props };
+    const propsAndStubs = { ...this.props } as Record<string, View<Props> | string>;
 
     Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
-    const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
+    const fragment = this.createDocumentElement('template') as HTMLTemplateElement;
 
     fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
 
-    Object.values(this.children).forEach((child: Block) => {
-      const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+    Object.values(this.children).forEach((child: View<Props>) => {
+      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
 
       stub?.replaceWith(child.getContent());
     });

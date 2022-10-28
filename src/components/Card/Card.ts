@@ -1,20 +1,20 @@
-import Block from '../../packages/View';
+import View from '../../packages/View';
 import cardHbs from './card.hbs';
 import css from './card.css';
 
 type Props = {
-  title: string;
-  content: Block;
+  content: View;
+  title?: string;
 };
 
-export default class Card extends Block {
-  constructor(props: Partial<Props>) {
+export default class Card extends View<Props> {
+  public constructor(props: Props) {
     super('div', props);
 
     this.addAttribute({ class: css.card });
   }
 
-  render(): DocumentFragment {
+  public render(): DocumentFragment {
     return this.compile(cardHbs());
   }
 }

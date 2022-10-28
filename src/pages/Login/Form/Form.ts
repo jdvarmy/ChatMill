@@ -1,5 +1,5 @@
 import loginFormHbs from './loginForm.hbs';
-import Block from '../../../packages/View';
+import View from '../../../packages/View';
 import Button from '../../../components/Button/Button';
 import TextField from '../../../components/TextField/TextField';
 import { LinkPropsType } from '../../../templates/link/link';
@@ -12,14 +12,14 @@ type Props = {
   link: LinkPropsType;
 };
 
-export default class Form extends Block {
-  constructor(props: Props) {
+export default class Form extends View<Props> {
+  public constructor(props: Props) {
     super('div', props);
 
     this.addAttribute({ class: css.container });
   }
 
-  render(): DocumentFragment {
+  public render(): DocumentFragment {
     return this.compile(loginFormHbs());
   }
 }
