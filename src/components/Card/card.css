@@ -1,0 +1,22 @@
+.card {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-secondary);
+  border-radius: var(--border-radius-m);
+  padding: 0;
+  box-shadow: var(--shadow-box-1);
+  overflow: hidden;
+}
+.cardHeader {
+  display: flex;
+  padding: var(--space-m);
+}
+.cardTitle {
+  margin: 0;
+  font-weight: var(--font-weight-text-bold);
+  font-size: var(--size-text-xxl);
+  display: block;
+}
+.cardContent {
+  padding: var(--space-m);
+  padding-bottom: var(--space-xl);
+}

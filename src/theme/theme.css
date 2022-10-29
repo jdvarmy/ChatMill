@@ -7,6 +7,9 @@
   --color-primary: #9ea4c1;
   --color-secondary: #cbccd2;
   --color-ghost: #cbccd2b3;
+  --color-bg-secondary-ghost: #8c7cf033;
+  --color-bg-primary-ghost: #8c7cf019;
+  --color-ghost-white: #ffffff3b;
   --color-white: #fff;
 
   --color-success: #44d600;
@@ -15,6 +18,7 @@
   --color-link: #33c2ff;
 
   /* sizes */
+  --size-text-xs: 11px;
   --size-text-s: 14px;
   --size-text-m: 16px;
   --size-text-l: 20px;
@@ -40,7 +44,8 @@
   --space-l: 20px;
   --space-xl: 24px;
   --space-xxl: 34px;
-  --space-xxxl: 70px;
+  --space-xxxl: 40px;
+  --space-xxxxl: 70px;
 
   /* border */
   --border-radius-m: 6px;
