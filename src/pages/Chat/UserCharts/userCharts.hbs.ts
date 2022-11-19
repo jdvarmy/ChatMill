@@ -44,6 +44,7 @@ export default function userChartsHbs(): string {
     </div>
     <div class="${css.chartList}" id="chats">
       {{#each chats}}
+        <!-- todo: сделаать активный чат, в помощь хелпер iff -->
         <div class="${css.chartContainer}" data-chat-id="{{this.id}}"> <!-- {item.active && css.chartContainerActive}-->
           <div class="${css.chartImageContainer}">
             <div class="${css.chartImage}">

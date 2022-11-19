@@ -33,7 +33,9 @@ export default function renderChat(query: string = rootSelector): Element | unde
     addChat: new Link({ ...linkProps, icon: plusIcon, events: { click: (e) => ChatAction.addChat(e) } }),
   };
 
-  const UserContent = connect((store) => ({ user: store.user, chats: store.chats }))(UserCharts);
+  const UserContent = connect((store) => ({ user: store.user, chats: store.chats, activeChatId: store.activeChatId }))(
+    UserCharts,
+  );
   const messengerContent = new Messenger({ button, message: messageField });
 
   const page = new Chat({ userContent: new UserContent(userProps), messengerContent });

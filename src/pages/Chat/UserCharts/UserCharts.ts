@@ -2,7 +2,7 @@ import View from '../../../packages/View';
 import Link from '../../../components/Link/Link';
 import userChartsHbs from './userCharts.hbs';
 import css from '../chat.css';
-import { StoreType } from '../../../packages/Store/Store';
+import Store, { StoreType } from '../../../packages/Store/Store';
 
 type Props = {
   logOut: Link;
@@ -10,6 +10,7 @@ type Props = {
   addChat: Link;
   user?: StoreType['user'];
   chats?: StoreType['chats'];
+  activeChatId?: StoreType['activeChatId'];
 };
 
 export class UserCharts extends View<Props> {
@@ -17,6 +18,19 @@ export class UserCharts extends View<Props> {
     super('div', props);
 
     this.addAttribute({ class: css.userCharts });
+  }
+
+  componentWillMount(_oldProps: Props, _newProps: Props) {
+    if (this.props.chats?.length) {
+      const chatNodes = this.element.querySelectorAll('#chats > div');
+      if (chatNodes.length) {
+        const handleClick = (e: Event) => {
+          const chatId = (e.currentTarget as HTMLElement).getAttribute('data-chat-id');
+          Store.set('activeChatId', chatId);
+        };
+        chatNodes.forEach((node) => node.addEventListener('click', handleClick));
+      }
+    }
   }
 
   public render(): DocumentFragment | string {

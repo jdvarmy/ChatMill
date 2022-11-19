@@ -8,8 +8,10 @@ import renderStatus500 from './pages/Status500';
 import renderProfile, { ContentPage } from './pages/Profile';
 import renderChat from './pages/Chat';
 import { Router } from './packages/Router/Router';
+import { registerHelpers } from './helpers/registerHelpers';
 
 registrationTemplates();
+registerHelpers();
 
 new Router('#root')
   .use('/messenger', renderChat)

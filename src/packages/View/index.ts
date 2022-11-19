@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import Handlebars from 'handlebars';
 import { isArray } from '../../utils/functions/isArray';
 import cloneDeep from '../../utils/functions/cloneDeep';
+import isEqual from '../../utils/functions/isEqual';
 
 const enum Events {
   init = 'init',
@@ -107,7 +108,7 @@ export default class View<Props extends object = {}> {
   }
 
   public componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
-    return true;
+    return isEqual(_oldProps, _newProps);
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public componentWillMount(_oldProps: Props, _newProps: Props): void {}
