@@ -1,12 +1,11 @@
 import layout from '../../layout/layout';
 import View from '../../packages/View';
 import chatHbs from './chat.hbs';
-import Messenger from './Messenger/Messenger';
 import css from '../../layout/layout.css';
 
 type Props = {
   userContent: { state: object };
-  messengerContent: Messenger;
+  messengerContent: { state: object };
 };
 
 export default class Chat extends View<Props> {

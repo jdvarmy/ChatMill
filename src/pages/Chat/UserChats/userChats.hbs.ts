@@ -3,7 +3,7 @@ import avatar from '../../../../static/images/avatars/4.jpg';
 import { searchIcon } from '../../../utils/icons';
 import { staticUrl } from '../../../api/api';
 
-export default function userChartsHbs(): string {
+export default function userChatsHbs(): string {
   return `
     <!-- user -->
     <div class="${css.userSettingsContainer}">
@@ -37,17 +37,17 @@ export default function userChartsHbs(): string {
         <fieldset class="${css.searchFieldset}"></fieldset>
       </div>
     </div>
-    <!-- charts -->
-    <div class="${css.chartTitle}">
-      {{> typography tag="h3" text="Charts"}}
+    <!-- chars -->
+    <div class="${css.chatTitle}">
+      {{> typography tag="h3" text="Chats"}}
       {{{addChat}}}
     </div>
-    <div class="${css.chartList}" id="chats">
+    <div class="${css.chatList}" id="chats">
       {{#each chats}}
         <!-- todo: сделаать активный чат, в помощь хелпер iff -->
-        <div class="${css.chartContainer}" data-chat-id="{{this.id}}"> <!-- {item.active && css.chartContainerActive}-->
-          <div class="${css.chartImageContainer}">
-            <div class="${css.chartImage}">
+        <div class="${css.chatContainer}" data-chat-id="{{this.id}}"> <!-- {item.active && css.chatContainerActive}-->
+          <div class="${css.chatImageContainer}">
+            <div class="${css.chatImage}">
               {{#if this.avatar}}
                 <img alt="avatar" src="${staticUrl}{{this.avatar}}">
               {{else}}

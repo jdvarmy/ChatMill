@@ -1,7 +1,7 @@
 import css from '../chat.css';
 import mortyAvatar from '../../../../static/images/avatars/2.jpg';
 import rickAvatar from '../../../../static/images/avatars/4.jpg';
-import { clockIcon, pinIcon, videoIcon, voiceIcon } from '../../../utils/icons';
+import { clockIcon, pinIcon, voiceIcon } from '../../../utils/icons';
 
 export default function messengerHbs() {
   return `
@@ -19,7 +19,6 @@ export default function messengerHbs() {
         </div>
         <div>
           <button class="${css.button} ${css.buttonIcon}">${voiceIcon}</button>
-          <button class="${css.button} ${css.buttonIcon}">${videoIcon}</button>
         </div>
       </div>
     </div>

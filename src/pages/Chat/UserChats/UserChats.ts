@@ -1,6 +1,6 @@
 import View from '../../../packages/View';
 import Link from '../../../components/Link/Link';
-import userChartsHbs from './userCharts.hbs';
+import userChatsHbs from './userChats.hbs';
 import css from '../chat.css';
 import Store, { StoreType } from '../../../packages/Store/Store';
 
@@ -13,11 +13,11 @@ type Props = {
   activeChatId?: StoreType['activeChatId'];
 };
 
-export class UserCharts extends View<Props> {
+export class UserChats extends View<Props> {
   public constructor(props: Props) {
     super('div', props);
 
-    this.addAttribute({ class: css.userCharts });
+    this.addAttribute({ class: css.userChats });
   }
 
   componentWillMount(_oldProps: Props, _newProps: Props) {
@@ -34,6 +34,6 @@ export class UserCharts extends View<Props> {
   }
 
   public render(): DocumentFragment | string {
-    return this.compile(userChartsHbs());
+    return this.compile(userChatsHbs());
   }
 }

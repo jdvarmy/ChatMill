@@ -17,6 +17,7 @@ export default class Messenger extends View<Props> {
   }
 
   public render(): DocumentFragment | string {
+    console.log(this.props);
     return this.compile(messengerHbs());
   }
 }

@@ -84,7 +84,8 @@ const api = {
   put: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
     baseRequest<R>({ method: RequestMethod.put, url, data, config }),
 
-  delete: <R>(url: string, config?: ConfigType) => baseRequest<R>({ method: RequestMethod.delete, url, config }),
+  delete: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
+    baseRequest<R>({ method: RequestMethod.delete, url, data, config }),
 };
 
 export default api;

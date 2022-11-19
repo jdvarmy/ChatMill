@@ -1,7 +1,7 @@
 import { rootSelector } from '../../types';
 import { renderDOM } from '../../utils/renderDOM';
 import Chat from './Chat';
-import { UserCharts } from './UserCharts/UserCharts';
+import { UserChats } from './UserChats/UserChats';
 import Messenger from './Messenger/Messenger';
 import Button from '../../components/Button/Button';
 import TextField, { InputNames, InputTypes } from '../../components/TextField/TextField';
@@ -34,11 +34,14 @@ export default function renderChat(query: string = rootSelector): Element | unde
   };
 
   const UserContent = connect((store) => ({ user: store.user, chats: store.chats, activeChatId: store.activeChatId }))(
-    UserCharts,
+    UserChats,
   );
-  const messengerContent = new Messenger({ button, message: messageField });
+  const MessengerContent = connect((store) => ({ chats: store.chats, activeChatId: store.activeChatId }))(Messenger);
 
-  const page = new Chat({ userContent: new UserContent(userProps), messengerContent });
+  const page = new Chat({
+    userContent: new UserContent(userProps),
+    messengerContent: new MessengerContent({ button, message: messageField }),
+  });
 
   ChatAction.getChats();
 

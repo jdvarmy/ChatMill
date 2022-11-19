@@ -8,7 +8,7 @@
   height: 100%;
   display: flex;
 }
-.userChartsContainer {
+.userChatsContainer {
   width: 300px;
   background: var(--color-bg-secondary);
   border-right: 1px solid var(--color-bg-primary-ghost);
@@ -20,7 +20,7 @@
   flex-direction: column;
   flex: 1;
 }
-.userCharts {
+.userChats {
   padding: var(--space-l);
 }
 .userSettingsContainer {
@@ -155,7 +155,7 @@
   overflow: hidden;
   min-width: 0;
 }
-.chartTitle {
+.chatTitle {
   display: flex;
   align-content: center;
   justify-content: space-between;
@@ -163,10 +163,10 @@
   margin-bottom: var(--space-xs);
   margin-top: var(--space-m);
 }
-.chartTitle h3 {
+.chatTitle h3 {
   margin: 0;
 }
-.chartList {
+.chatList {
   position: relative;
   margin: 0;
   padding: 0;
@@ -315,7 +315,7 @@
 .padding {
   margin-top: var(--space-m);
 }
-.chartContainer {
+.chatContainer {
   align-items: center;
   position: relative;
   box-sizing: border-box;
@@ -336,25 +336,25 @@
   margin: var(--space-xs) 0;
   padding: var(--space-xs) var(--space-m);
 }
-.chartContainerActive {
+.chatContainerActive {
   background-color: var(--color-bg-primary-ghost);
 }
-.chartContainer:hover {
+.chatContainer:hover {
   background-color: var(--color-bg-primary);
 }
-.chartContainerActive.chartContainer:hover {
+.chatContainerActive.chatContainer:hover {
   background-color: var(--color-bg-secondary-ghost);
 }
-.chartImageContainer {
+.chatImageContainer {
   min-width: 56px;
 }
-.chartImage img {
+.chatImage img {
   width: 100%;
   height: 100%;
   text-align: center;
   object-fit: cover;
 }
-.chartImage {
+.chatImage {
   position: relative;
   display: flex;
   align-items: center;
