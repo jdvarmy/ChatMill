@@ -393,3 +393,10 @@
   color: var(--color-bg-primary);
   font-weight: var(--font-weight-text-bold);
 }
+.addUser {
+  display: flex;
+  align-items: center;
+}
+.addUser > div {
+  margin: 0;
+}

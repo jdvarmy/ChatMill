@@ -28,7 +28,7 @@ export const enum InputNames {
 
 export type TextFieldProps = {
   label: string;
-  inputName: InputNames;
+  inputName: InputNames | string;
   inputType: InputTypes | string;
   name?: string;
   value?: string | number;

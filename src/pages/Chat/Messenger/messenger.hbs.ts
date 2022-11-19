@@ -1,7 +1,7 @@
 import css from '../chat.css';
 import mortyAvatar from '../../../../static/images/avatars/2.jpg';
 import rickAvatar from '../../../../static/images/avatars/4.jpg';
-import { clockIcon, pinIcon, voiceIcon } from '../../../utils/icons';
+import { clockIcon, pinIcon } from '../../../utils/icons';
 
 export default function messengerHbs() {
   return `
@@ -10,15 +10,21 @@ export default function messengerHbs() {
       <div class="${css.messengerHeaderContainer}">
         <div class="${css.headerAvatar}">
           <div class="${css.headerAvatarImg}">
-              <img alt="Rick" src="${rickAvatar}">
+              <img alt="avatar" src="${rickAvatar}">
           </div>
           <div class="${css.userSettings}">
             {{> typography tag="h3" text="Rick"}}
             <div class="${css.lastMessage}">8 minutes ago</div>
           </div>
         </div>
-        <div>
-          <button class="${css.button} ${css.buttonIcon}">${voiceIcon}</button>
+        <div class="${css.addUser}">
+          {{#if activeChatId}}
+            {{{addUser}}}
+            {{{addUserBtn}}}
+            {{{removeUserBtn}}}
+          {{else}}
+            {{> typography tag="h4" text="Select chat"}}
+          {{/if}}
         </div>
       </div>
     </div>

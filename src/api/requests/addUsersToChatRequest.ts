@@ -7,7 +7,8 @@ export type UsersToChatType = {
 
 export const addUsersToChatRequest = (data: UsersToChatType) => {
   try {
-    return api.put<true>('chats/users', JSON.stringify({ data }), { headers: contentHeaderJson });
+    console.log(data);
+    return api.put<true>('chats/users', JSON.stringify(data), { headers: contentHeaderJson });
   } catch (e) {
     console.log(e);
   }

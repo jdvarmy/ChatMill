@@ -24,14 +24,13 @@ class ChatAction extends Action {
     }
   }
 
-  // todo: принимать массив id юзеров
-  public async addUsersToChat(chatId: number) {
-    await addUsersToChatRequest({ users: [1341, 1241], chatId });
+  // todo: конец спринта, делаю все в спешке =(, переделать
+  public async addUsersToChat(userid: number, chatId: number) {
+    await addUsersToChatRequest({ users: [userid], chatId });
   }
 
-  // todo: принимать массив id юзеров
-  public async deleteUsersFromChat(chatId: number) {
-    await deleteUsersFromChatRequest({ users: [1341, 1241], chatId });
+  public async deleteUsersFromChat(userid: number, chatId: number) {
+    await deleteUsersFromChatRequest({ users: [userid], chatId });
   }
 }
 

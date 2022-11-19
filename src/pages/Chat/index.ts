@@ -13,18 +13,42 @@ import { handleBlur } from '../../utils/validator/handleBlur';
 import LogoutAction from '../../api/actions/LogoutAction';
 import { connect } from '../../hoc/connect';
 import ChatAction from '../../api/actions/ChatAction';
+import Store from '../../packages/Store/Store';
 
 const linkProps: LinkProps = { icon: logoutIcon, type: 'icon', href: '/', text: '', size: 's' };
 
 export default function renderChat(query: string = rootSelector): Element | undefined {
   const button = new Button({ text: 'Send', name: 'send', events: { click: handleClick } });
 
-  const fieldEvents = { focus: handleFocus, blur: handleBlur };
-  const messageField = new TextField({
-    label: 'Write here your message...',
+  const events = { focus: handleFocus, blur: handleBlur };
+  const message = new TextField({
+    label: 'Your message here...',
     inputName: InputNames.message,
     inputType: InputTypes.text,
-    events: fieldEvents,
+    events,
+  });
+  const addUser = new TextField({ label: 'User id', inputName: 'add_user', inputType: InputTypes.text, events });
+  const userBtnHandler = (e: MouseEvent, handler: (userid: number, chatId: number) => Promise<void>) => {
+    const parent = (e.currentTarget as HTMLElement)?.parentNode;
+    const input = parent?.querySelector('input');
+    if (input?.value) {
+      const chat = Number(Store.getState().activeChatId);
+      const user = Number(input.value);
+      if (chat && user) {
+        handler(user, chat);
+      }
+      input.value = '';
+    }
+  };
+  const addUserBtn = new Button({
+    text: 'Add',
+    name: 'add',
+    events: { click: (e) => userBtnHandler(e, ChatAction.addUsersToChat) },
+  });
+  const removeUserBtn = new Button({
+    text: 'Del',
+    name: 'del',
+    events: { click: (e) => userBtnHandler(e, ChatAction.deleteUsersFromChat) },
   });
 
   const userProps = {
@@ -40,7 +64,7 @@ export default function renderChat(query: string = rootSelector): Element | unde
 
   const page = new Chat({
     userContent: new UserContent(userProps),
-    messengerContent: new MessengerContent({ button, message: messageField }),
+    messengerContent: new MessengerContent({ button, message, addUser, addUserBtn, removeUserBtn }),
   });
 
   ChatAction.getChats();
