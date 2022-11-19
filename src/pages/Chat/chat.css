@@ -399,4 +399,5 @@
 }
 .addUser > div {
   margin: 0;
+  max-width: 120px;
 }

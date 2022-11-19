@@ -5,6 +5,7 @@ export enum StoreEvents {
   updated = 'updated',
 }
 export type UserStoreDataType = {
+  id: number;
   login: string;
   email: string;
   phone: string;
@@ -31,12 +32,14 @@ export type StoreType = {
   user: UserStoreDataType;
   chats: ChatStoreType[] | null;
   activeChatId: number | null;
+  token: string | null;
 };
 
 const initialStore = {
   user: {} as UserStoreDataType,
   chats: null,
   activeChatId: null,
+  token: null,
 };
 
 class Store extends EventBus {

@@ -53,8 +53,7 @@ export class Router {
     getUserRequest()
       .then((respose) => {
         if (respose) {
-          const { id, ...user } = respose;
-          store.set('user', camelCaseKeys(user));
+          store.set('user', camelCaseKeys(respose));
           if (['/', '/registration'].includes(window.location.pathname)) {
             this.go('/messenger');
           }

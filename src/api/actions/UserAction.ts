@@ -21,8 +21,7 @@ class UserAction extends Action {
       const user = await changeUserRequest(validateFormData);
 
       if (user) {
-        const { id, ...newUser } = user;
-        this.store.set('user', camelCaseKeys(newUser));
+        this.store.set('user', camelCaseKeys(user));
       }
     }
   }
@@ -46,11 +45,8 @@ class UserAction extends Action {
 
     const user = await changeAvatarRequest(formData);
 
-    console.log(user);
-
     if (user) {
-      const { id, ...newUser } = user;
-      this.store.set('user', camelCaseKeys(newUser));
+      this.store.set('user', camelCaseKeys(user));
     }
   }
 }

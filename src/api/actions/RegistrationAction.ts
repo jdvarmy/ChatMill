@@ -20,8 +20,7 @@ class RegistrationAction extends Action {
         const user = await getUserRequest();
 
         if (user) {
-          const { id, ...newUser } = user;
-          this.store.set('user', camelCaseKeys(newUser));
+          this.store.set('user', camelCaseKeys(user));
           this.router.go('/messenger');
         }
       }

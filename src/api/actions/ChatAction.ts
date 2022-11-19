@@ -4,6 +4,7 @@ import { camelCaseKeys } from '../../utils/functions/camelCaseKeys';
 import { addChatRequest } from '../requests/addChatRequest';
 import { addUsersToChatRequest } from '../requests/addUsersToChatRequest';
 import { deleteUsersFromChatRequest } from '../requests/deleteUsersFromChatRequest';
+import { getChatTokenRequest } from '../requests/getChatTokenRequest';
 
 class ChatAction extends Action {
   public async getChats() {
@@ -31,6 +32,10 @@ class ChatAction extends Action {
 
   public async deleteUsersFromChat(userid: number, chatId: number) {
     await deleteUsersFromChatRequest({ users: [userid], chatId });
+  }
+
+  public async getToken(chatId: number | string) {
+    return getChatTokenRequest(chatId);
   }
 }
 
