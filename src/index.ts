@@ -7,38 +7,17 @@ import renderStatus404 from './pages/Status404';
 import renderStatus500 from './pages/Status500';
 import renderProfile, { ContentPage } from './pages/Profile';
 import renderChat from './pages/Chat';
+import { Router } from './packages/Router/Router';
 
 registrationTemplates();
 
-const root = document.querySelector('#root') as HTMLDivElement;
-if (root) {
-  root.style.height = '100%';
-
-  switch (window.location.pathname) {
-    case '/':
-      renderChat();
-      break;
-    case '/login':
-      renderLogin();
-      break;
-    case '/registration':
-      renderRegistration();
-      break;
-    case '/profile':
-    case '/profile/details':
-      renderProfile();
-      break;
-    case '/profile/profile':
-      renderProfile('#root', ContentPage.profile);
-      break;
-    case '/profile/security':
-      renderProfile('#root', ContentPage.security);
-      break;
-    case '/500':
-      renderStatus500();
-      break;
-    case '/404':
-    default:
-      renderStatus404('#root');
-  }
-}
+new Router('#root')
+  .use('/messenger', renderChat)
+  .use('/', renderLogin)
+  .use('/registration', renderRegistration)
+  .use(['/profile/profile'], renderProfile(ContentPage.profile))
+  .use(['/profile', '/profile/details'], renderProfile(ContentPage.details))
+  .use('/profile/security', renderProfile(ContentPage.security))
+  .use('/500', renderStatus500)
+  .use('*', renderStatus404)
+  .start();

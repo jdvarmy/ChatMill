@@ -1,6 +1,8 @@
 import EventBus from '../EventBus';
 import { v4 as uuid } from 'uuid';
 import Handlebars from 'handlebars';
+import { isArray } from '../../utils/functions/isArray';
+import cloneDeep from '../../utils/functions/cloneDeep';
 
 const enum Events {
   init = 'init',
@@ -10,40 +12,55 @@ const enum Events {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export default abstract class View<Props extends object = {}> {
+export default class View<Props extends object = {}> {
   private readonly id: string;
 
   protected readonly _element: HTMLElement;
   protected props: Props;
   protected children: Props;
+  protected arrayOfChildren: Props;
   protected eventBus: EventBus;
 
-  protected constructor(tag = 'div', propsAndChildren: Props) {
-    const { props, children } = this.getChildren(propsAndChildren);
+  constructor(tag = 'div', propsAndChildren: Props) {
+    const { props, children, arrayOfChildren } = this.getChildren(propsAndChildren);
     const eventBus = new EventBus();
 
     this.id = uuid();
     this._element = this.createDocumentElement(tag);
     this.props = this.makePropsProxy({ ...props, id: this.id });
     this.children = this.makePropsProxy(children);
+    this.arrayOfChildren = this.makePropsProxy(arrayOfChildren);
     this.eventBus = eventBus;
 
     this.registerEvents(eventBus);
     eventBus.emit(Events.init);
   }
 
-  private getChildren(propsAndChildren: Props): { props: Props; children: Props } {
+  private getChildren(propsAndChildren: Props): { props: Props; children: Props; arrayOfChildren: Props } {
     return Object.entries(propsAndChildren).reduce(
       (acc, [key, value]) => {
+        // console.log(key);
         if (value instanceof View) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           acc.children[key] = value;
+        } else if (isArray(value) && value.every((i: object) => i instanceof View)) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          acc.arrayOfChildren[key] = value;
         } else {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           acc.props[key] = value;
         }
 
         return acc;
       },
-      { props: {}, children: {} } as { props: Props; children: Props },
+      { props: {}, children: {}, arrayOfChildren: {} } as unknown as {
+        props: Props;
+        children: Props;
+        arrayOfChildren: Props;
+      },
     );
   }
 
@@ -64,6 +81,12 @@ export default abstract class View<Props extends object = {}> {
     Object.values(this.children).forEach((child) => {
       child.dispatchComponentDidMount();
     });
+
+    if (Array.isArray(this.arrayOfChildren)) {
+      this.arrayOfChildren.forEach((child) => {
+        child.dispatchComponentDidMount();
+      });
+    }
   }
 
   public componentDidMount(oldProps: Props): Props {
@@ -80,12 +103,14 @@ export default abstract class View<Props extends object = {}> {
       return;
     }
     this._render();
+    this.componentWillMount(oldProps, newProps);
   }
 
   public componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
-    // todo: сделать метод
     return true;
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public componentWillMount(_oldProps: Props, _newProps: Props): void {}
 
   public setProps = (nextProps: Partial<Props>) => {
     if (!nextProps) {
@@ -95,11 +120,21 @@ export default abstract class View<Props extends object = {}> {
     Object.assign(this.props, nextProps);
   };
 
+  get viewProps() {
+    return this.props;
+  }
+
+  get viewArrayOfChildren() {
+    return this.arrayOfChildren;
+  }
+
   get element() {
     return this._element;
   }
 
   protected addEvents() {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { events = {} } = this.props as Props;
 
     Object.keys(events).forEach((eventName) => {
@@ -108,6 +143,8 @@ export default abstract class View<Props extends object = {}> {
   }
 
   protected removeEvents() {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -136,7 +173,9 @@ export default abstract class View<Props extends object = {}> {
     this.addEvents();
   }
 
-  abstract render(): DocumentFragment | string;
+  render(): DocumentFragment | string {
+    return 'Empty render';
+  }
 
   public getContent(): HTMLElement {
     return this.element;
@@ -145,14 +184,17 @@ export default abstract class View<Props extends object = {}> {
   private makePropsProxy(props: Props) {
     return new Proxy(props, {
       get: (target, prop) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop, value) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         target[prop] = value;
 
-        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-        this.eventBus.emit(Events.cdu, { ...target }, target);
+        this.eventBus.emit(Events.cdu, cloneDeep(target), target);
         return true;
       },
       deleteProperty() {
@@ -170,11 +212,16 @@ export default abstract class View<Props extends object = {}> {
   }
 
   compile(template: string) {
-    const propsAndStubs = { ...this.props } as Record<string, View<Props> | string>;
+    const propsAndStubs = { ...this.props } as Record<string, string | string[]>;
 
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
+    if (Object.keys(this.arrayOfChildren).length > 0) {
+      Object.entries(this.arrayOfChildren).forEach(([key, children]: [string, View[]]) => {
+        propsAndStubs[key] = children.map((child) => `<div data-id="${child.id}"></div>`);
+      });
+    }
 
     const fragment = this.createDocumentElement('template') as HTMLTemplateElement;
 
@@ -185,6 +232,15 @@ export default abstract class View<Props extends object = {}> {
 
       stub?.replaceWith(child.getContent());
     });
+    if (Object.keys(this.arrayOfChildren).length > 0) {
+      Object.values(this.arrayOfChildren).forEach((children: View[]) => {
+        children.forEach((child) => {
+          const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+
+          stub?.replaceWith(child.getContent());
+        });
+      });
+    }
 
     return fragment.content;
   }

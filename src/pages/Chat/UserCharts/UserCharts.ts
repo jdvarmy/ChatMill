@@ -1,11 +1,19 @@
 import View from '../../../packages/View';
+import Link from '../../../components/Link/Link';
 import userChartsHbs from './userCharts.hbs';
 import css from '../chat.css';
+import { StoreType } from '../../../packages/Store/Store';
 
-type Props = any;
+type Props = {
+  logOut: Link;
+  settingLink: Link;
+  addChat: Link;
+  user?: StoreType['user'];
+  chats?: StoreType['chats'];
+};
 
-export default class UserCharts extends View<Props> {
-  public constructor(props: Props = {}) {
+export class UserCharts extends View<Props> {
+  public constructor(props: Props) {
     super('div', props);
 
     this.addAttribute({ class: css.userCharts });

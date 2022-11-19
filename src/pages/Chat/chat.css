@@ -43,8 +43,7 @@
 }
 .userSettingsAvatar > img,
 .headerAvatarImg > img,
-.messageImg > img,
-.chartImage img {
+.messageImg > img {
   width: 100%;
   height: 100%;
   text-align: center;
@@ -59,6 +58,10 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+}
+.userSettingsChildren > div:last-child {
+  display: flex;
+  flex-direction: column;
 }
 .buttonIcon {
   background-color: transparent;
@@ -153,85 +156,20 @@
   min-width: 0;
 }
 .chartTitle {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: var(--space-xs);
   margin-top: var(--space-m);
+}
+.chartTitle h3 {
+  margin: 0;
 }
 .chartList {
   position: relative;
   margin: 0;
   padding: 0;
-}
-.chartContainer {
-  align-items: center;
-  position: relative;
-  box-sizing: border-box;
-  background-color: transparent;
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  user-select: none;
-  vertical-align: middle;
-  text-decoration: none;
-  color: inherit;
-  border-radius: var(--border-radius-m);
-  display: flex;
-  flex-grow: 1;
-  justify-content: flex-start;
-  text-align: left;
-  transition: background-color 150ms var(--element-transition-function);
-  margin: var(--space-xs) 0;
-  padding: var(--space-xs) var(--space-m);
-}
-.chartContainerActive {
-  background-color: var(--color-bg-primary-ghost);
-}
-.chartContainer:hover {
-  background-color: var(--color-bg-primary);
-}
-.chartContainerActive.chartContainer:hover {
-  background-color: var(--color-bg-secondary-ghost);
-}
-.chartImageContainer {
-  min-width: 56px;
-}
-.chartImage {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: var(--space-xxxl);
-  height: var(--space-xxxl);
-  line-height: 1;
-  border-radius: 50%;
-  overflow: hidden;
-  user-select: none;
-}
-.userContainer {
-  flex: 1 1 auto;
-  min-width: 0;
-  margin-right: var(--space-xs);
-}
-.lastMessage {
-  margin: 0;
-  font-size: var(--size-text-s);
-  font-weight: var(--font-weight-text-light);
-  line-height: var(--font-line-height-m);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--color-ghost);
-}
-.unreadCount {
-  padding: var(--space-xxs) var(--space-xs);
-  border-radius: var(--border-radius-m);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  max-height: var(--size-text-xl);
-  background-color: var(--color-bg-secondary-ghost);
-  color: var(--color-bg-primary);
-  font-weight: var(--font-weight-text-bold);
 }
 .messengerHeaderWrapper {
   background: var(--color-bg-secondary);
@@ -376,4 +314,82 @@
 }
 .padding {
   margin-top: var(--space-m);
+}
+.chartContainer {
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--border-radius-m);
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-start;
+  text-align: left;
+  transition: background-color 150ms var(--element-transition-function);
+  margin: var(--space-xs) 0;
+  padding: var(--space-xs) var(--space-m);
+}
+.chartContainerActive {
+  background-color: var(--color-bg-primary-ghost);
+}
+.chartContainer:hover {
+  background-color: var(--color-bg-primary);
+}
+.chartContainerActive.chartContainer:hover {
+  background-color: var(--color-bg-secondary-ghost);
+}
+.chartImageContainer {
+  min-width: 56px;
+}
+.chartImage img {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  object-fit: cover;
+}
+.chartImage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--space-xxxl);
+  height: var(--space-xxxl);
+  line-height: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  user-select: none;
+}
+.userContainer {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: var(--space-xs);
+}
+.lastMessage {
+  margin: 0;
+  font-size: var(--size-text-s);
+  font-weight: var(--font-weight-text-light);
+  line-height: var(--font-line-height-m);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-ghost);
+}
+.unreadCount {
+  padding: var(--space-xxs) var(--space-xs);
+  border-radius: var(--border-radius-m);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-height: var(--size-text-xl);
+  background-color: var(--color-bg-secondary-ghost);
+  color: var(--color-bg-primary);
+  font-weight: var(--font-weight-text-bold);
 }

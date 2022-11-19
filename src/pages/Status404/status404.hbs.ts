@@ -7,9 +7,7 @@ export default function status404Hbs(): string {
       ${svg}
       {{> typography tag="h2" text="The page you were looking for doesn't exist."}}
       {{> hr}}
-      {{#with link}}
-        {{> link}}
-      {{/with}}
+      {{{link}}}
     </div>
   `;
 }

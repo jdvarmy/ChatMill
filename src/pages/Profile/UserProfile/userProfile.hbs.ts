@@ -7,12 +7,9 @@ export default function userProfileHbs(): string {
   </div>
   <div class="${css.contentWrapper}">
     <form>
-      {{{firstNameField}}}
-      {{{lastNameField}}}
-      {{{phoneField}}}
-      {{{loginField}}}
-      {{{displayNameField}}}
-      {{{emailField}}}
+      {{#each fields}}
+        {{{this}}}
+      {{/each}}
       {{{button}}}
     </form>
   </div>

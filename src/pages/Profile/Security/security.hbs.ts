@@ -7,9 +7,9 @@ export default function securityHbs(): string {
   </div>
   <div class="${css.contentWrapper}">
     <form>
-      {{{oldPasswordField}}}
-      {{{newPasswordField}}}
-      {{{repeatPasswordField}}}
+      {{#each fields}}
+        {{{this}}}
+      {{/each}}
       {{{button}}}
     </form>
   </div>

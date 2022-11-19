@@ -3,11 +3,15 @@ import * as qs from 'qs';
 type DataReqType = any;
 type ConfigType = { headers?: Record<string, string>; timeout?: number };
 
+const baseUrl = 'https://ya-praktikum.tech/api/v2';
+export const staticUrl = `${baseUrl}/resources`;
 const baseConfig = {
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
   },
+};
+export const contentHeaderJson = {
+  'Content-Type': 'application/json',
 };
 
 const enum RequestMethod {
@@ -39,20 +43,24 @@ const baseRequest = <R>({
     const xhr = new XMLHttpRequest();
     const isGet = method === RequestMethod.get;
 
-    xhr.open(method, url);
+    xhr.open(method, baseUrl + '/' + url);
 
     Object.entries(headers).forEach(([key, value]) => {
       xhr.setRequestHeader(key, value);
     });
 
-    xhr.onload = function () {
-      resolve(xhr as R);
-    };
+    xhr.responseType = 'json';
+    xhr.withCredentials = true;
+    xhr.timeout = config?.timeout ?? 5000;
 
+    xhr.onload = () => {
+      if ([200, 201].includes(xhr.status)) {
+        return resolve((xhr.response ?? true) as R);
+      }
+      return reject({ response: xhr.response, status: xhr.status });
+    };
     xhr.onabort = reject;
     xhr.onerror = reject;
-
-    xhr.timeout = config?.timeout ?? 5000;
     xhr.ontimeout = reject;
 
     if (isGet || !data) {
@@ -63,20 +71,20 @@ const baseRequest = <R>({
   });
 };
 
-const requests = {
-  get: <R>(url: string, data?: DataReqType, cfg?: ConfigType) => {
+const api = {
+  get: <R>(url: string, data?: DataReqType, config?: ConfigType) => {
     const queryUrl = data ? `${url}${qs.stringify(data, { addQueryPrefix: true })}` : url;
 
-    return baseRequest<R>({ method: RequestMethod.get, url: queryUrl, ...cfg });
+    return baseRequest<R>({ method: RequestMethod.get, url: queryUrl, config });
   },
 
-  post: <R>(url: string, data?: DataReqType, cfg?: ConfigType) =>
-    baseRequest<R>({ method: RequestMethod.post, url, data, ...cfg }),
+  post: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
+    baseRequest<R>({ method: RequestMethod.post, url, data, config }),
 
-  put: <R>(url: string, data?: DataReqType, cfg?: ConfigType) =>
-    baseRequest<R>({ method: RequestMethod.put, url, data, ...cfg }),
+  put: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
+    baseRequest<R>({ method: RequestMethod.put, url, data, config }),
 
-  delete: <R>(url: string, cfg?: ConfigType) => baseRequest<R>({ method: RequestMethod.delete, url, ...cfg }),
+  delete: <R>(url: string, config?: ConfigType) => baseRequest<R>({ method: RequestMethod.delete, url, config }),
 };
 
-export default requests;
+export default api;

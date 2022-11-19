@@ -5,9 +5,7 @@ import securityHbs from './security.hbs';
 
 type Props = {
   button: Button;
-  oldPasswordField: TextField;
-  newPasswordField: TextField;
-  repeatPasswordField: TextField;
+  fields: TextField[];
 };
 
 export default class Security extends View<Props> {

@@ -1,12 +1,13 @@
 import View from '../../packages/View';
 import layout from '../../layout/layout';
 import profileHbs from './profile.hbs';
-import { LinkPropsType } from '../../templates/link/link';
 import css from '../../layout/layout.css';
+import Link from '../../components/Link/Link';
 
 type Props = {
-  links: LinkPropsType[];
-  content: View;
+  links: Link[];
+  backLink: Link;
+  content: { state: object };
 };
 
 export default class Profile extends View<Props> {

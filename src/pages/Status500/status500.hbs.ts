@@ -7,9 +7,7 @@ export default function status500Hbs(): string {
       ${svg}
       {{> typography tag="h2" text="There was an error, please try again later"}}
       {{> hr}}
-      {{#with link}}
-        {{> link}}
-      {{/with}}
+      {{{link}}}
     </div>
   `;
 }

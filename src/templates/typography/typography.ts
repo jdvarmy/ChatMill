@@ -8,7 +8,7 @@ import './typography.css';
  * @param {string} text контент
  */
 export function typography(): void {
-  const template = Handlebars.compile(`<{{tag}}>{{text}}</{{tag}}>`);
+  const template = Handlebars.compile(`<{{tag}}>{{prefix}}{{text}}</{{tag}}>`);
 
   Handlebars.registerPartial('typography', template);
 }

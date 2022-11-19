@@ -1,11 +1,11 @@
 import layout from '../../layout/layout';
 import View from '../../packages/View';
-import { LinkPropsType } from '../../templates/link/link';
 import status404Hbs from './status404.hbs';
 import css from '../../layout/layout.css';
+import Link from '../../components/Link/Link';
 
 type Props = {
-  link: LinkPropsType;
+  link: Link;
 };
 
 export default class Status404 extends View<Props> {
