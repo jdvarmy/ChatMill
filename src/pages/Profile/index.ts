@@ -26,7 +26,7 @@ export enum ContentPage {
 export default function renderProfile(contentPage = ContentPage.details): (query?: string) => Element | undefined {
   return function (query: string = rootSelector): Element | undefined {
     const button = new Button({ text: 'Save', name: 'save' });
-    const loadAvatar = new ButtonFile({ name: 'avatar', icon: loadIcon });
+    const loadAvatarBtn = new ButtonFile({ name: 'avatar', icon: loadIcon });
     const events = { focus: handleFocus, blur: handleBlur };
     const textFieldsProfile: TextFieldProps[] = [
       { label: 'First name', inputName: InputNames.firstName, inputType: InputTypes.text, events, name: 'firstName' },
@@ -48,12 +48,11 @@ export default function renderProfile(contentPage = ContentPage.details): (query
     ];
 
     let ClassContent: any;
-    const content = connect(userSelector);
 
     switch (contentPage) {
       case ContentPage.profile:
         button.setProps({ events: { click: (e) => UserAction.putProfile(e) } });
-        ClassContent = new (content(UserProfile))({
+        ClassContent = new (connect(userSelector)(UserProfile))({
           fields: textFieldsProfile.map((item) => new TextField(item)),
           button,
         });
@@ -67,8 +66,8 @@ export default function renderProfile(contentPage = ContentPage.details): (query
         break;
       default:
         button.setProps({ text: 'Change cover', name: 'cover' });
-        ClassContent = new (content(Details))({ button, loadAvatar });
-        loadAvatar.setProps({
+        ClassContent = new (connect(userSelector)(Details))({ button, loadAvatarBtn });
+        loadAvatarBtn.setProps({
           events: {
             click: (e: MouseEvent) => {
               findParentNode(e.target, 'form')?.querySelector('input')?.click();
@@ -89,7 +88,7 @@ export default function renderProfile(contentPage = ContentPage.details): (query
         break;
     }
 
-    const page = new (content(Profile))({
+    const page = new Profile({
       content: ClassContent,
       backLink: new Link({ icon: backIcon, type: 'icon', text: '' }),
       links: [

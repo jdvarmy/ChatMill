@@ -40,7 +40,6 @@ export default class View<Props extends object = {}> {
   private getChildren(propsAndChildren: Props): { props: Props; children: Props; arrayOfChildren: Props } {
     return Object.entries(propsAndChildren).reduce(
       (acc, [key, value]) => {
-        // console.log(key);
         if (value instanceof View) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore

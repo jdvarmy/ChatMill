@@ -1,6 +1,6 @@
 import css from '../chat.css';
 import avatar from '../../../../static/images/avatars/4.jpg';
-import { searchIcon } from '../../../utils/icons';
+import { searchIcon, trashIcon } from '../../../utils/icons';
 import { staticUrl } from '../../../api/api';
 
 export default function userChatsHbs(): string {
@@ -21,8 +21,8 @@ export default function userChatsHbs(): string {
             {{> typography tag="h6" text="Hi Mr. Jellybean, I’m Morty. I’m on an adventure with my grandpa."}}
           </div>
           <div>
-            {{{logOut}}}
-            {{{settingLink}}}
+            {{{logout}}}
+            {{{setting}}}
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@ export default function userChatsHbs(): string {
     <div class="${css.chatList}" id="chats">
       {{#each chats}}
         <!-- todo: сделаать активный чат, в помощь хелпер iff -->
-        <div class="${css.chatContainer}" data-chat-id="{{this.id}}"> <!-- {item.active && css.chatContainerActive}-->
+        <div class="${css.chatContainer} chat-wrapper" data-chat-id="{{this.id}}"> <!-- {item.active && css.chatContainerActive}-->
           <div class="${css.chatImageContainer}">
             <div class="${css.chatImage}">
               {{#if this.avatar}}
@@ -60,6 +60,7 @@ export default function userChatsHbs(): string {
             <div class="${css.lastMessage}">{{this.lastMessage.content}}</div>
           </div>
           {{#if this.unreadCount}}<span class="${css.unreadCount}">{{this.unreadCount}}</span>{{/if}}
+          <button class="${css.button} ${css.buttonIcon} button-trash">${trashIcon}</button>
         </div>
       {{/each}}
     </div>

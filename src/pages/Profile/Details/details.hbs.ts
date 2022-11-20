@@ -16,7 +16,7 @@ export default function detailsHbs(): string {
         <img alt="avatar" src="${staticUrl}{{user.avatar}}" class="${css.detailsAvatarImg}">
       </div>
       <form class="${css.changeAvatar}" >
-        {{{loadAvatar}}}
+        {{{loadAvatarBtn}}}
       </form>
     </div>
     <div class="${css.bioWrapper}">

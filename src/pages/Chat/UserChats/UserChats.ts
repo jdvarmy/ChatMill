@@ -5,10 +5,11 @@ import css from '../chat.css';
 import Store, { StoreType } from '../../../packages/Store/Store';
 import ChatAction from '../../../api/actions/ChatAction';
 import { WS } from '../../../packages/WS/WS';
+import { findParentNode } from '../../../utils/findParentNode';
 
 type Props = {
-  logOut: Link;
-  settingLink: Link;
+  logout: Link;
+  setting: Link;
   addChat: Link;
   user?: StoreType['user'];
   chats?: StoreType['chats'];
@@ -30,6 +31,18 @@ export class UserChats extends View<Props> {
         chatNodes.forEach((node) => node.addEventListener('click', handleClick));
       }
     }
+
+    this.element.querySelectorAll('.button-trash').forEach((trash) => {
+      trash.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const chatId = findParentNode(e.currentTarget, '.chat-wrapper')?.getAttribute('data-chat-id');
+        if (chatId) {
+          ChatAction.deleteChat(+chatId);
+        }
+      });
+    });
   }
 
   public render(): DocumentFragment | string {

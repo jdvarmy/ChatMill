@@ -5,6 +5,7 @@ import { addChatRequest } from '../requests/addChatRequest';
 import { addUsersToChatRequest } from '../requests/addUsersToChatRequest';
 import { deleteUsersFromChatRequest } from '../requests/deleteUsersFromChatRequest';
 import { getChatTokenRequest } from '../requests/getChatTokenRequest';
+import { deleteChatRequest } from '../requests/deleteChatRequest';
 
 class ChatAction extends Action {
   public async getChats() {
@@ -20,6 +21,13 @@ class ChatAction extends Action {
   public async addChat(e: MouseEvent) {
     e.preventDefault();
     const chat = await addChatRequest('new chat');
+    if (chat) {
+      this.getChats();
+    }
+  }
+
+  public async deleteChat(id: number) {
+    const chat = await deleteChatRequest(id);
     if (chat) {
       this.getChats();
     }

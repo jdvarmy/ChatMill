@@ -4,7 +4,7 @@ import Button from '../../../components/Button/Button';
 import ButtonFile from '../../../components/ButtonFile/ButtonFile';
 
 type Props = {
-  loadAvatar: ButtonFile;
+  loadAvatarBtn: ButtonFile;
   button: Button;
 };
 

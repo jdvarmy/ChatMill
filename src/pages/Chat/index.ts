@@ -28,34 +28,18 @@ export default function renderChat(query: string = rootSelector): Element | unde
     events,
   });
   const addUser = new TextField({ label: 'User id', inputName: 'add_user', inputType: InputTypes.text, events });
-  const userBtnHandler = (e: MouseEvent, handler: (userid: number, chatId: number) => Promise<void>) => {
-    const parent = (e.currentTarget as HTMLElement)?.parentNode;
-    const input = parent?.querySelector('input');
-    if (input?.value) {
-      const chat = Number(Store.getState().activeChatId);
-      const user = Number(input.value);
-      if (chat && user) {
-        handler(user, chat);
-      }
-      input.value = '';
-    }
-  };
-  const addUserBtn = new Button({
-    text: 'Add',
-    name: 'add',
-    events: { click: (e) => userBtnHandler(e, ChatAction.addUsersToChat) },
-  });
-  const removeUserBtn = new Button({
-    text: 'Del',
-    name: 'del',
-    events: { click: (e) => userBtnHandler(e, ChatAction.deleteUsersFromChat) },
-  });
+
+  const addUserHandler = (e: MouseEvent) => userBtnHandler(e, ChatAction.addUsersToChat);
+  const delUserHandler = (e: MouseEvent) => userBtnHandler(e, ChatAction.deleteUsersFromChat);
+  const addUserBtn = new Button({ text: 'Add', name: 'add', events: { click: addUserHandler } });
+  const removeUserBtn = new Button({ text: 'Del', name: 'del', events: { click: delUserHandler } });
 
   const userProps = {
-    logOut: new Link({ ...linkProps, events: { click: (e) => LogoutAction.logout(e) } }),
-    settingLink: new Link({ ...linkProps, icon: settingIcon, href: '/profile' }),
+    logout: new Link({ ...linkProps, events: { click: (e) => LogoutAction.logout(e) } }),
+    setting: new Link({ ...linkProps, icon: settingIcon, href: '/profile' }),
     addChat: new Link({ ...linkProps, icon: plusIcon, events: { click: (e) => ChatAction.addChat(e) } }),
   };
+  const messengerProps = { button, message, addUser, addUserBtn, removeUserBtn };
 
   const UserContent = connect((store) => ({ user: store.user, chats: store.chats, activeChatId: store.activeChatId }))(
     UserChats,
@@ -64,10 +48,23 @@ export default function renderChat(query: string = rootSelector): Element | unde
 
   const page = new Chat({
     userContent: new UserContent(userProps),
-    messengerContent: new MessengerContent({ button, message, addUser, addUserBtn, removeUserBtn }),
+    messengerContent: new MessengerContent(messengerProps),
   });
 
   ChatAction.getChats();
 
   return renderDOM(query, page);
+}
+
+function userBtnHandler(e: MouseEvent, handler: (userid: number, chatId: number) => Promise<void>) {
+  const parent = (e.currentTarget as HTMLElement)?.parentNode;
+  const input = parent?.querySelector('input');
+  if (input?.value) {
+    const chat = Number(Store.getState().activeChatId);
+    const user = Number(input.value);
+    if (chat && user) {
+      handler(user, chat);
+    }
+    input.value = '';
+  }
 }
