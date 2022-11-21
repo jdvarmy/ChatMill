@@ -2,6 +2,9 @@ import * as qs from 'qs';
 
 type DataReqType = any;
 type ConfigType = { headers?: Record<string, string>; timeout?: number };
+interface HTTPMethod {
+  <R>(url: string, data?: DataReqType, config?: ConfigType): Promise<R>;
+}
 
 const baseUrl = 'https://ya-praktikum.tech/api/v2';
 export const staticUrl = `${baseUrl}/resources`;
@@ -71,21 +74,18 @@ const baseRequest = <R>({
   });
 };
 
-const api = {
-  get: <R>(url: string, data?: DataReqType, config?: ConfigType) => {
+const api: { get: HTTPMethod; post: HTTPMethod; put: HTTPMethod; delete: HTTPMethod } = {
+  get: (url, data, config) => {
     const queryUrl = data ? `${url}${qs.stringify(data, { addQueryPrefix: true })}` : url;
 
-    return baseRequest<R>({ method: RequestMethod.get, url: queryUrl, config });
+    return baseRequest({ method: RequestMethod.get, url: queryUrl, config });
   },
 
-  post: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
-    baseRequest<R>({ method: RequestMethod.post, url, data, config }),
+  post: (url, data, config) => baseRequest({ method: RequestMethod.post, url, data, config }),
 
-  put: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
-    baseRequest<R>({ method: RequestMethod.put, url, data, config }),
+  put: (url, data, config) => baseRequest({ method: RequestMethod.put, url, data, config }),
 
-  delete: <R>(url: string, data?: DataReqType, config?: ConfigType) =>
-    baseRequest<R>({ method: RequestMethod.delete, url, data, config }),
+  delete: (url, data, config) => baseRequest({ method: RequestMethod.delete, url, data, config }),
 };
 
 export default api;

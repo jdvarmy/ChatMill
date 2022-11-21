@@ -26,15 +26,19 @@ export class WS {
     });
 
     this.socket.addEventListener('message', (event: any) => {
-      const parseData = JSON.parse(event.data);
-      if (Array.isArray(parseData)) {
-        Store.set(
-          'messages',
-          JSON.parse(event.data).map((item: Messages) => camelCaseKeys(item)),
-        );
-      } else {
-        const messages = Store.getState().messages;
-        Store.set('messages', [camelCaseKeys(parseData), ...(messages || [])]);
+      try {
+        const parseData = JSON.parse(event.data);
+        if (Array.isArray(parseData)) {
+          Store.set(
+            'messages',
+            JSON.parse(event.data).map((item: Messages) => camelCaseKeys(item)),
+          );
+        } else {
+          const messages = Store.getState().messages;
+          Store.set('messages', [camelCaseKeys(parseData), ...(messages || [])]);
+        }
+      } catch (e) {
+        console.log(e);
       }
     });
 
