@@ -30,6 +30,10 @@
   transition: color var(--element-transition-fast), transform var(--element-transition-fast),
     max-width var(--element-transition-fast);
 }
+.sizeS .fieldInputLabel {
+  font-size: var(--size-text-s);
+  transform: translate(14px, 9px) scale(1);
+}
 .fieldInputContainer {
   color: var(--color-secondary);
   font-size: var(--size-text-s);
@@ -78,4 +82,7 @@
   visibility: hidden;
   max-width: 0.01px;
   transition: max-width 100ms var(--element-transition-function);
+}
+.sizeS input {
+  padding: var(--space-xs);
 }

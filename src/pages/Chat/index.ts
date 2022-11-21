@@ -4,7 +4,7 @@ import Chat from './Chat';
 import { UserChats } from './UserChats/UserChats';
 import Messenger from './Messenger/Messenger';
 import Button from '../../components/Button/Button';
-import TextField, { InputNames, InputTypes } from '../../components/TextField/TextField';
+import TextField, { InputNames } from '../../components/TextField/TextField';
 import { handleClick } from '../../utils/validator/handleClick';
 import Link, { LinkProps } from '../../components/Link/Link';
 import { logoutIcon, plusIcon, settingIcon } from '../../utils/icons';
@@ -18,28 +18,21 @@ import Store from '../../packages/Store/Store';
 const linkProps: LinkProps = { icon: logoutIcon, type: 'icon', href: '/', text: '', size: 's' };
 
 export default function renderChat(query: string = rootSelector): Element | undefined {
-  const button = new Button({ text: 'Send', name: 'send', events: { click: handleClick } });
-
   const events = { focus: handleFocus, blur: handleBlur };
-  const message = new TextField({
-    label: 'Your message here...',
-    inputName: InputNames.message,
-    inputType: InputTypes.text,
-    events,
-  });
-  const addUser = new TextField({ label: 'User id', inputName: 'add_user', inputType: InputTypes.text, events });
-
-  const addUserHandler = (e: MouseEvent) => userBtnHandler(e, ChatAction.addUsersToChat);
-  const delUserHandler = (e: MouseEvent) => userBtnHandler(e, ChatAction.deleteUsersFromChat);
+  const button = new Button({ text: 'Send', name: 'send', events: { click: handleClick } });
+  const message = new TextField({ label: 'Your message here...', inputName: InputNames.message, events });
+  const addUser = new TextField({ label: 'User id', inputName: 'add_user', size: 's', events });
   const addUserBtn = new Button({ text: 'Add', name: 'add', events: { click: addUserHandler } });
   const removeUserBtn = new Button({ text: 'Del', name: 'del', events: { click: delUserHandler } });
 
-  const userProps = {
-    logout: new Link({ ...linkProps, events: { click: (e) => LogoutAction.logout(e) } }),
-    setting: new Link({ ...linkProps, icon: settingIcon, href: '/profile' }),
-    addChat: new Link({ ...linkProps, icon: plusIcon, events: { click: (e) => ChatAction.addChat(e) } }),
-  };
   const messengerProps = { button, message, addUser, addUserBtn, removeUserBtn };
+
+  const logout = new Link({ ...linkProps, events: { click: (e) => LogoutAction.logout(e) } });
+  const setting = new Link({ ...linkProps, icon: settingIcon, href: '/profile' });
+  const addChat = new TextField({ label: 'Chat title', inputName: 'add_chat', size: 's', events });
+  const addChatBtn = new Link({ ...linkProps, icon: plusIcon, events: { click: addChatHandler } });
+
+  const userProps = { logout, setting, addChat, addChatBtn };
 
   const UserContent = connect((store) => ({ user: store.user, chats: store.chats, activeChatId: store.activeChatId }))(
     UserChats,
@@ -54,6 +47,23 @@ export default function renderChat(query: string = rootSelector): Element | unde
   ChatAction.getChats();
 
   return renderDOM(query, page);
+}
+
+function addChatHandler(e: MouseEvent) {
+  e.preventDefault();
+
+  const input = (e.currentTarget as HTMLElement).parentNode?.querySelector('input');
+
+  if (input?.value) {
+    ChatAction.addChat(input.value);
+    input.value = '';
+  }
+}
+function addUserHandler(e: MouseEvent) {
+  return userBtnHandler(e, ChatAction.addUsersToChat);
+}
+function delUserHandler(e: MouseEvent) {
+  return userBtnHandler(e, ChatAction.deleteUsersFromChat);
 }
 
 function userBtnHandler(e: MouseEvent, handler: (userid: number, chatId: number) => Promise<void>) {

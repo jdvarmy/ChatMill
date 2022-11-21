@@ -20,12 +20,12 @@ export default function renderRegistration(query: string = rootSelector): Elemen
 
   const events = { focus: handleFocus, blur: handleBlur };
   const fields: TextFieldProps[] = [
-    { label: 'First name', inputName: InputNames.firstName, inputType: InputTypes.text, events },
-    { label: 'Last name', inputName: InputNames.secondName, inputType: InputTypes.text, events },
+    { label: 'First name', inputName: InputNames.firstName, events },
+    { label: 'Last name', inputName: InputNames.secondName, events },
     { label: 'Phone', inputName: InputNames.phone, inputType: InputTypes.tel, events },
     { label: 'Email', inputName: InputNames.email, inputType: InputTypes.email, events },
-    { label: 'Login', inputName: InputNames.login, inputType: InputTypes.text, events },
-    { label: 'Password', inputName: InputNames.password, inputType: InputTypes.text, events },
+    { label: 'Login', inputName: InputNames.login, events },
+    { label: 'Password', inputName: InputNames.password, events },
   ];
 
   const form = new Form({ fields: fields.map((item) => new TextField(item)), button, link });

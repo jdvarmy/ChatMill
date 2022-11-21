@@ -29,17 +29,11 @@ export default function renderProfile(contentPage = ContentPage.details): (query
     const loadAvatarBtn = new ButtonFile({ name: 'avatar', icon: loadIcon });
     const events = { focus: handleFocus, blur: handleBlur };
     const textFieldsProfile: TextFieldProps[] = [
-      { label: 'First name', inputName: InputNames.firstName, inputType: InputTypes.text, events, name: 'firstName' },
-      { label: 'Last name', inputName: InputNames.secondName, inputType: InputTypes.text, events, name: 'secondName' },
+      { label: 'First name', inputName: InputNames.firstName, events, name: 'firstName' },
+      { label: 'Last name', inputName: InputNames.secondName, events, name: 'secondName' },
       { label: 'Phone', inputName: InputNames.phone, inputType: InputTypes.tel, events, name: 'phone' },
-      { label: 'Login', inputName: InputNames.login, inputType: InputTypes.text, events, name: 'login' },
-      {
-        label: 'Display name',
-        inputName: InputNames.displayName,
-        inputType: InputTypes.text,
-        events,
-        name: 'displayName',
-      },
+      { label: 'Login', inputName: InputNames.login, events, name: 'login' },
+      { label: 'Display name', inputName: InputNames.displayName, events, name: 'displayName' },
       { label: 'Email', inputName: InputNames.email, inputType: InputTypes.email, events, name: 'email' },
     ];
     const textFieldsSecurity = [

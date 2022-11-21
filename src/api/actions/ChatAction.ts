@@ -18,9 +18,8 @@ class ChatAction extends Action {
     }
   }
 
-  public async addChat(e: MouseEvent) {
-    e.preventDefault();
-    const chat = await addChatRequest('new chat');
+  public async addChat(title: string) {
+    const chat = await addChatRequest(title);
     if (chat) {
       this.getChats();
     }

@@ -1,4 +1,4 @@
-@import '../../components/Button/button.css';
+@import '../../components/ButtonIcon/buttonIcon.css';
 
 .wrapper {
   flex: 1 1 auto;
@@ -62,30 +62,6 @@
 .userSettingsChildren > div:last-child {
   display: flex;
   flex-direction: column;
-}
-.buttonIcon {
-  background-color: transparent;
-  margin: 0;
-  text-align: center;
-  flex: 0 0 auto;
-  overflow: visible;
-  color: var(--color-bg-primary);
-  border-radius: var(--border-radius-m);
-  padding: var(--space-xs);
-  min-width: var(--space-xxxl);
-  height: var(--space-xxxl);
-}
-.buttonIcon:hover {
-  background-color: var(--color-bg-primary-ghost);
-}
-.buttonIcon svg {
-  display: inline-block;
-  fill: currentColor;
-  user-select: none;
-  width: 1em;
-  height: 1em;
-  flex-shrink: 0;
-  font-size: 1.4rem;
 }
 .searchContainer {
   display: inline-flex;
@@ -165,6 +141,16 @@
 }
 .chatTitle h3 {
   margin: 0;
+}
+.chatControls {
+  display: flex;
+  align-content: center;
+  justify-content: flex-end;
+  align-items: center;
+}
+.chatControls > div {
+  margin: 0;
+  width: 90px;
 }
 .chatList {
   position: relative;

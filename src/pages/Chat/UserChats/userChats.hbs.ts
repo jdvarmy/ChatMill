@@ -40,7 +40,10 @@ export default function userChatsHbs(): string {
     <!-- chars -->
     <div class="${css.chatTitle}">
       {{> typography tag="h3" text="Chats"}}
-      {{{addChat}}}
+      <div class="${css.chatControls}">
+        {{{addChat}}}
+        {{{addChatBtn}}}
+      </div>
     </div>
     <div class="${css.chatList}" id="chats">
       {{#each chats}}

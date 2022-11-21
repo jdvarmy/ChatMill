@@ -1,21 +1,26 @@
 @import '../../components/Button/button.css';
 
 .buttonIcon {
-  border-radius: 100%;
-  background: var(--color-bg-primary);
-  color: var(--color-white);
-  box-shadow: var(--shadow-box-2);
-  width: var(--space-xxl);
-  height: var(--space-xxl);
-  min-width: var(--space-xxl);
-  padding: 0;
+  background-color: transparent;
+  margin: 0;
+  text-align: center;
+  flex: 0 0 auto;
+  overflow: visible;
+  color: var(--color-bg-primary);
+  border-radius: var(--border-radius-m);
+  padding: var(--space-xs);
+  min-width: var(--space-xxxl);
+  height: var(--space-xxxl);
 }
-
+.buttonIcon:hover {
+  background-color: var(--color-bg-primary-ghost);
+}
 .buttonIcon svg {
+  display: inline-block;
+  fill: currentColor;
   user-select: none;
   width: 1em;
   height: 1em;
-  display: inline-block;
-  fill: currentColor;
-  font-size: 1.6rem;
+  flex-shrink: 0;
+  font-size: 1.4rem;
 }

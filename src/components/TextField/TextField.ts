@@ -29,10 +29,11 @@ export const enum InputNames {
 export type TextFieldProps = {
   label: string;
   inputName: InputNames | string;
-  inputType: InputTypes | string;
+  inputType?: InputTypes | string;
   name?: string;
   value?: string | number;
   events?: EventType;
+  size?: 'm' | 's';
 };
 
 export default class TextField extends View<TextFieldProps> {
@@ -40,6 +41,8 @@ export default class TextField extends View<TextFieldProps> {
     super('div', props);
 
     this.addAttribute({ class: css.fieldContainer });
+    const element = this.element as HTMLDivElement;
+    props.size === 's' && element.classList.add(css.sizeS);
   }
 
   protected addEvents() {

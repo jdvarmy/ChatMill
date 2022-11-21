@@ -16,7 +16,7 @@ export default function renderLogin(query: string = rootSelector): Element | und
 
   const events = { focus: handleFocus, blur: handleBlur };
   const fields = [
-    new TextField({ label: 'Login', inputName: InputNames.login, inputType: InputTypes.text, events }),
+    new TextField({ label: 'Login', inputName: InputNames.login, events }),
     new TextField({ label: 'Password', inputName: InputNames.password, inputType: InputTypes.password, events }),
   ];
 
