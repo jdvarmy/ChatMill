@@ -253,7 +253,6 @@
 }
 .timeAgo {
   margin: 0;
-  padding-top: var(--space-xs);
   display: flex;
   align-items: center;
   font-size: var(--size-text-s);
@@ -298,8 +297,8 @@
   background: var(--color-bg-primary);
   color: var(--color-white);
 }
-.padding {
-  margin-top: var(--space-m);
+.marginBotton {
+  margin-bottom: var(--space-m);
 }
 .chatContainer {
   align-items: center;

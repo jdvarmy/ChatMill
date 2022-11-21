@@ -1,14 +1,21 @@
 import css from '../chat.css';
-import mortyAvatar from '../../../../static/images/avatars/2.jpg';
 import rickAvatar from '../../../../static/images/avatars/4.jpg';
-import { clockIcon, pinIcon } from '../../../utils/icons';
+import { staticUrl } from '../../../api/api';
+import { Messages, StoreType } from '../../../packages/Store/Store';
+import { message } from './message';
 
-export default function messengerHbs() {
+export default function messengerHbs(messages?: StoreType['messages'], userId?: string | number) {
+  let formattedMessages = [];
+  if (messages && userId) {
+    formattedMessages = formatMessages(messages, userId);
+  }
+
   return `
     <!-- header -->
     <div class="${css.messengerHeaderWrapper}">
       <div class="${css.messengerHeaderContainer}">
-        <div class="${css.headerAvatar}">
+        {{#if activeChatId}}
+          <div class="${css.headerAvatar}">
           <div class="${css.headerAvatarImg}">
               <img alt="avatar" src="${rickAvatar}">
           </div>
@@ -17,6 +24,7 @@ export default function messengerHbs() {
             <div class="${css.lastMessage}">8 minutes ago</div>
           </div>
         </div>
+        {{/if}}
         <div class="${css.addUser}">
           {{#if activeChatId}}
             {{{addUser}}}
@@ -32,96 +40,15 @@ export default function messengerHbs() {
     <div class="${css.boardWrapper}">
       <div class="${css.boardContainer}">
         <div class="${css.board}">
-          <div class="${css.dividerWrapper}">
-              <span class="${css.divider}">October 23 2022</span>
-          </div>
-          
-          <div class="${css.messageBoxLeft}">
-            <div class="${css.headerAvatarImg}">
-              <img alt="Morty" src="${mortyAvatar}">
-            </div>
-            <div class="${css.boardMessage} ${css.boardUserMessage}">
-              <div class="${css.paperUserMessage}">
-                Hi. Can you send me the missing invoices?
-              </div>
-              <div class="${css.timeAgo}">
-                ${clockIcon} 5 days ago
-              </div>
-            </div>
-          </div>
-          
-          <div class="${css.messageBoxRight}">
-            <div class="${css.boardMessage}">
-              <div class="${css.paperUserMessage} ${css.paperMessage}">
-                Yes, I'll email them right now. I'll let you know once the remaining invoices are done.
-              </div>
-              <div class="${css.timeAgo}">
-                ${clockIcon} 5 days ago
-              </div>
-            </div>
-            <div class="${css.headerAvatarImg}">
-              <img alt="Rick" src="${rickAvatar}">
-            </div>
-          </div>
-          
-          <div class="${css.dividerWrapper}">
-              <span class="${css.divider}">October 21 2022</span>
-          </div>
-          
-          <div class="${css.messageBoxRight}">
-            <div class="${css.boardMessage}">
-              <div class="${css.paperUserMessage} ${css.paperMessage}">
-                Hey! Are you there?
-              </div>
-              <div class="${css.paperUserMessage} ${css.paperMessage} ${css.padding}">
-                Heeeelloooo????
-              </div>
-              <div class="${css.timeAgo}">
-                ${clockIcon} 3 days ago
-              </div>
-            </div>
-            <div class="${css.headerAvatarImg}">
-              <img alt="Rick" src="${rickAvatar}">
-            </div>
-          </div>
-          
-          <div class="${css.dividerWrapper}">
-              <span class="${css.divider}">Today</span>
-          </div>
-          
-          <div class="${css.messageBoxLeft}">
-            <div class="${css.headerAvatarImg}">
-              <img alt="Morty" src="${mortyAvatar}">
-            </div>
-            <div class="${css.boardMessage} ${css.boardUserMessage}">
-              <div class="${css.paperUserMessage}">
-                Hey there!
-              </div>
-              <div class="${css.paperUserMessage} ${css.padding}">
-                How are you? Is it ok if I call you?
-              </div>
-              <div class="${css.timeAgo}">
-                ${clockIcon} 6 minutes ago
-              </div>
-            </div>
-          </div>
-          
-          <div class="${css.messageBoxRight}">
-            <div class="${css.boardMessage}">
-              <div class="${css.paperUserMessage} ${css.paperMessage}">
-                Hello, I just got my Amazon order shipped and I’m very happy about that.
-              </div>
-              <div class="${css.paperUserMessage} ${css.paperMessage} ${css.padding}">
-                Can you confirm?
-              </div>
-              <div class="${css.timeAgo}">
-                ${clockIcon} 8 minutes ago
-              </div>
-            </div>
-            <div class="${css.headerAvatarImg}">
-              <img alt="Rick" src="${rickAvatar}">
-            </div>
-          </div>
+          ${formattedMessages
+            .map((item: any) =>
+              message({
+                side: item.side,
+                time: item.content.at(-1)?.time,
+                text: item.content.map((i: Messages) => i.content),
+              }),
+            )
+            .join('')}
         </div>
       </div>
     </div>
@@ -129,18 +56,29 @@ export default function messengerHbs() {
     <form class="${css.sendMessageFormWrapper}">
       <div class="${css.sendMessageFormContainer}">
       <div class="${css.messageImg}">
-        <img alt="Morty" src="${mortyAvatar}">
+        <img alt="avatar" src="${staticUrl}{{user.avatar}}">
       </div>
       {{> vr}}
       <div class="${css.messageFieldContainer}">
         {{{message}}}
       </div>
-      <button class="${css.button} ${css.buttonIcon}" type="button">
-      ${pinIcon}
-      </button>
-      {{> vr}}
-      {{{button}}}
+      {{#if activeChatId}}{{> vr}}{{{button}}}{{/if}}
       </div>
     </form>
   `;
+}
+
+function formatMessages(messages: any, user: string | number) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return messages?.reduceRight((accumulator, { userId, ...mess }) => {
+    const previos = accumulator.at(-1);
+    if (previos && previos.userId === userId) {
+      previos.content.push({ ...mess });
+      return accumulator;
+    }
+
+    accumulator.push({ userId, side: userId === user ? 'left' : 'right', content: [{ ...mess }] });
+    return accumulator;
+  }, []);
 }

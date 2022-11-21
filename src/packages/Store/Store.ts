@@ -27,12 +27,32 @@ export type ChatStoreType = {
     content: string;
   } | null;
 };
+type FileMessage = {
+  id: number;
+  userId: number;
+  path: string;
+  filename: string;
+  contentType: string;
+  contentSize: number;
+  uploadDate: string;
+};
+export type Messages = {
+  id: number;
+  content: string;
+  time: string;
+  type: 'message' | string;
+  userId: number | string;
+  chatId?: number;
+  file?: FileMessage | null;
+  isRead?: boolean;
+};
 
 export type StoreType = {
   user: UserStoreDataType;
   chats: ChatStoreType[] | null;
   activeChatId: number | null;
   token: string | null;
+  messages: Messages[] | null;
 };
 
 const initialStore = {
@@ -40,6 +60,7 @@ const initialStore = {
   chats: null,
   activeChatId: null,
   token: null,
+  messages: null,
 };
 
 class Store extends EventBus {

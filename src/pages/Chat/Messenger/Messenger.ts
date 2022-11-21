@@ -11,6 +11,8 @@ type Props = {
   addUserBtn: Button;
   removeUserBtn: Button;
   message: TextField;
+  messages?: StoreType['messages'];
+  user?: StoreType['user'];
   chats?: StoreType['chats'];
   activeChatId?: StoreType['activeChatId'];
 };
@@ -23,6 +25,7 @@ export default class Messenger extends View<Props> {
   }
 
   public render(): DocumentFragment | string {
-    return this.compile(messengerHbs());
+    console.log(this.props.messages);
+    return this.compile(messengerHbs(this.props.messages, this.props.user?.id));
   }
 }

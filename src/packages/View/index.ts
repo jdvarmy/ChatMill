@@ -106,6 +106,7 @@ export default class View<Props extends object = {}> {
     this.componentWillMount(oldProps, newProps);
   }
 
+  // todo: repair function
   public componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
     return isEqual(_oldProps, _newProps);
   }

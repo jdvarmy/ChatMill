@@ -59,8 +59,7 @@ async function selectChatHandler(e: Event) {
 
     if (token) {
       // подрубаемся к сокету
-      const socket = new WS().init(Store.getState().user.id, chatId, token?.token);
-      console.log(socket);
+      new WS().init(Store.getState().user.id, chatId, token?.token);
     }
   }
 }
