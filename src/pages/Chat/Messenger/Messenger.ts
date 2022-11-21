@@ -25,7 +25,6 @@ export default class Messenger extends View<Props> {
   }
 
   public render(): DocumentFragment | string {
-    console.log(this.props.messages);
     return this.compile(messengerHbs(this.props.messages, this.props.user?.id));
   }
 }
