@@ -4,8 +4,8 @@ export default function chatHbs(): string {
   return `
     <div class="${css.wrapper}">
       <div class="${css.container}">
-        <div class="${css.userChartsContainer}">
-          {{{userChartsContent}}}
+        <div class="${css.userCharsContainer}">
+          {{{userContent}}}
         </div>
         {{{messengerContent}}}
       </div>

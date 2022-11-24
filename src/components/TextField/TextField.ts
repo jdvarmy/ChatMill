@@ -3,6 +3,7 @@ import View from '../../packages/View';
 import textFieldHbs from './textField.hbs';
 import css from './textField.css';
 import { EventType } from '../../types';
+import { addRemoveClass, getPropsInputElement } from '../../utils/validator/valudator';
 
 export const enum InputTypes {
   text = 'text',
@@ -14,12 +15,12 @@ export const enum InputTypes {
 }
 export const enum InputNames {
   firstName = 'first_name',
-  lastName = 'last_name',
+  secondName = 'second_name',
   displayName = 'display_name',
   login = 'login',
   password = 'password',
-  oldPassword = 'old_password',
-  repeatPassword = 'repeat_password',
+  oldPassword = 'oldPassword',
+  newPassword = 'newPassword',
   email = 'email',
   phone = 'phone',
   message = 'message',
@@ -27,9 +28,12 @@ export const enum InputNames {
 
 export type TextFieldProps = {
   label: string;
-  inputName: InputNames;
-  inputType: InputTypes | string;
+  inputName: InputNames | string;
+  inputType?: InputTypes | string;
+  name?: string;
+  value?: string | number;
   events?: EventType;
+  size?: 'm' | 's';
 };
 
 export default class TextField extends View<TextFieldProps> {
@@ -37,6 +41,8 @@ export default class TextField extends View<TextFieldProps> {
     super('div', props);
 
     this.addAttribute({ class: css.fieldContainer });
+    const element = this.element as HTMLDivElement;
+    props.size === 's' && element.classList.add(css.sizeS);
   }
 
   protected addEvents() {
@@ -53,6 +59,15 @@ export default class TextField extends View<TextFieldProps> {
     Object.keys(events).forEach((eventName) => {
       this._element.querySelector('input')?.removeEventListener(eventName, events[eventName]);
     });
+  }
+
+  componentWillMount(_oldProps: TextFieldProps, _newProps: TextFieldProps) {
+    const input = this.element.querySelector('input');
+
+    if (input && this.props.value) {
+      const props = getPropsInputElement(input);
+      addRemoveClass(props, 'add');
+    }
   }
 
   public render(): DocumentFragment | string {

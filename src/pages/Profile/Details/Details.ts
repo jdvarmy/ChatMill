@@ -1,8 +1,10 @@
 import View from '../../../packages/View';
 import detailsHbs from './details.hbs';
 import Button from '../../../components/Button/Button';
+import ButtonFile from '../../../components/ButtonFile/ButtonFile';
 
 type Props = {
+  loadAvatarBtn: ButtonFile;
   button: Button;
 };
 

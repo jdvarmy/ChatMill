@@ -2,117 +2,96 @@ import { renderDOM } from '../../utils/renderDOM';
 import { rootSelector } from '../../types';
 import Profile from './Profile';
 import Button from '../../components/Button/Button';
-import View from '../../packages/View';
 import Details from './Details/Details';
 import UserProfile from './UserProfile/UserProfile';
 import Security from './Security/Security';
-import { formFieldValidator } from '../../utils/formFieldValidator';
-import TextField, { InputNames, InputTypes } from '../../components/TextField/TextField';
-import { handleClick } from '../../utils/handleClick';
+import TextField, { InputNames, InputTypes, TextFieldProps } from '../../components/TextField/TextField';
+import Link from '../../components/Link/Link';
+import { backIcon, loadIcon } from '../../utils/icons';
+import { handleFocus } from '../../utils/validator/handleFocus';
+import { handleBlur } from '../../utils/validator/handleBlur';
+import { connect } from '../../hoc/connect';
+import { userSelector } from '../../packages/Store/selectors';
+import UserAction from '../../api/actions/UserAction';
+import ButtonFile from '../../components/ButtonFile/ButtonFile';
+import { findParentNode } from '../../utils/findParentNode';
+import View from '../../packages/View';
 
-const style = 'width: calc(100% - 16px)';
 export enum ContentPage {
   details = 'details',
   profile = 'profile',
   security = 'security',
 }
 
-export default function renderProfile(query = rootSelector, contentPage = ContentPage.details) {
-  const button = new Button({
-    text: 'Save',
-    name: 'save',
-    events: {
-      click: handleClick,
-    },
-  });
+export default function renderProfile(contentPage = ContentPage.details): (query?: string) => Element | undefined {
+  return function (query: string = rootSelector): Element | undefined {
+    const button = new Button({ text: 'Save', name: 'save' });
+    const loadAvatarBtn = new ButtonFile({ name: 'avatar', icon: loadIcon });
+    const events = { focus: handleFocus, blur: handleBlur };
+    const textFieldsProfile: TextFieldProps[] = [
+      { label: 'First name', inputName: InputNames.firstName, events, name: 'firstName' },
+      { label: 'Last name', inputName: InputNames.secondName, events, name: 'secondName' },
+      { label: 'Phone', inputName: InputNames.phone, inputType: InputTypes.tel, events, name: 'phone' },
+      { label: 'Login', inputName: InputNames.login, events, name: 'login' },
+      { label: 'Display name', inputName: InputNames.displayName, events, name: 'displayName' },
+      { label: 'Email', inputName: InputNames.email, inputType: InputTypes.email, events, name: 'email' },
+    ];
+    const textFieldsSecurity = [
+      { label: 'Old password', inputName: InputNames.oldPassword, inputType: InputTypes.password, events },
+      { label: 'New password', inputName: InputNames.newPassword, inputType: InputTypes.password, events },
+    ];
 
-  const fieldEvents = { focus: formFieldValidator, blur: formFieldValidator };
-  let content: View;
-  switch (contentPage) {
-    case ContentPage.details:
-      button.setProps({ text: 'Change cover', name: 'cover' });
-      content = new Details({ button });
-      break;
-    case ContentPage.profile:
-      // eslint-disable-next-line no-case-declarations
-      const textFieldsProfile = {
-        firstNameField: new TextField({
-          label: 'First name',
-          inputName: InputNames.firstName,
-          inputType: InputTypes.text,
-          events: fieldEvents,
-        }),
-        lastNameField: new TextField({
-          label: 'Last name',
-          inputName: InputNames.lastName,
-          inputType: InputTypes.text,
-          events: fieldEvents,
-        }),
-        phoneField: new TextField({
-          label: 'Phone',
-          inputName: InputNames.phone,
-          inputType: InputTypes.tel,
-          events: fieldEvents,
-        }),
-        loginField: new TextField({
-          label: 'Login',
-          inputName: InputNames.login,
-          inputType: InputTypes.text,
-          events: fieldEvents,
-        }),
-        displayNameField: new TextField({
-          label: 'Display name',
-          inputName: InputNames.displayName,
-          inputType: InputTypes.text,
-          events: fieldEvents,
-        }),
-        emailField: new TextField({
-          label: 'Email',
-          inputName: InputNames.email,
-          inputType: InputTypes.email,
-          events: fieldEvents,
-        }),
-      };
+    let ClassContent: any;
 
-      content = new UserProfile({ ...textFieldsProfile, button });
-      break;
-    case ContentPage.security:
-      // eslint-disable-next-line no-case-declarations
-      const textFieldsSecurity = {
-        oldPasswordField: new TextField({
-          label: 'Old password',
-          inputName: InputNames.oldPassword,
-          inputType: InputTypes.password,
-          events: fieldEvents,
-        }),
-        newPasswordField: new TextField({
-          label: 'New password',
-          inputName: InputNames.password,
-          inputType: InputTypes.password,
-          events: fieldEvents,
-        }),
-        repeatPasswordField: new TextField({
-          label: 'Repeat password',
-          inputName: InputNames.repeatPassword,
-          inputType: InputTypes.password,
-          events: fieldEvents,
-        }),
-      };
+    switch (contentPage) {
+      case ContentPage.profile:
+        button.setProps({ events: { click: (e) => UserAction.putProfile(e) } });
+        ClassContent = new (connect(userSelector)(UserProfile))({
+          fields: textFieldsProfile.map((item) => new TextField(item)),
+          button,
+        });
+        break;
+      case ContentPage.security:
+        ClassContent = new Security({
+          fields: textFieldsSecurity.map((item) => new TextField(item)),
+          button,
+        });
+        button.setProps({ events: { click: (e) => UserAction.putSecurity(e, ClassContent) } });
+        break;
+      default:
+        button.setProps({ text: 'Change cover', name: 'cover' });
+        ClassContent = new (connect(userSelector)(Details))({ button, loadAvatarBtn });
+        loadAvatarBtn.setProps({
+          events: {
+            click: (e: MouseEvent) => {
+              findParentNode(e.target, 'form')?.querySelector('input')?.click();
+            },
+            change: (e: Event) => {
+              if (e.target instanceof HTMLInputElement) {
+                const file = e.target.files && e.target?.files[0];
+                if (!file) {
+                  return;
+                }
+                e.target.value = '';
 
-      content = new Security({ ...textFieldsSecurity, button });
-      break;
-    default:
-      content = new Details({ button });
-  }
+                UserAction.putAvatar(file);
+              }
+            },
+          },
+        });
+        break;
+    }
 
-  const page = new Profile({
-    content,
-    links: [
-      { button: true, style, text: 'Details', href: '/profile/details' },
-      { button: true, style, text: 'Profile', href: '/profile/profile' },
-      { button: true, style, text: 'Security', href: '/profile/security' },
-    ],
-  });
+    const page = new Profile({
+      content: ClassContent,
+      backLink: new Link({ icon: backIcon, type: 'icon', text: '' }),
+      links: [
+        new Link({ type: 'button', text: 'Details', href: '/profile/details' }),
+        new Link({ type: 'button', text: 'Profile', href: '/profile/profile' }),
+        new Link({ type: 'button', text: 'Security', href: '/profile/security' }),
+      ],
+    });
 
-  renderDOM(query, page);
+    return renderDOM(query, page as unknown as View);
+  };
 }

@@ -1,0 +1,51 @@
+@import '../../components/Button/button.css';
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  font-size: var(--size-text-s);
+  line-height: var(--font-line-height-l);
+  min-width: 64px;
+  padding: var(--space-xs);
+  color: var(--color-bg-primary);
+  font-weight: var(--font-weight-text-bold);
+  margin: var(--space-xs);
+  vertical-align: middle;
+}
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: 0;
+  cursor: pointer;
+  border-radius: var(--border-radius-m);
+  border: 1px solid var(--color-bg-primary);
+  background-color: transparent;
+  padding: var(--space-m);
+}
+.icon:hover {
+  background-color: var(--color-bg-primary-ghost);
+}
+.icon > * {
+  user-select: none;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  fill: currentColor;
+  flex-shrink: 0;
+  font-size: 1.6rem;
+  color: var(--color-bg-primary);
+}
+.sizeS {
+  width: var(--space-xxxl);
+  height: var(--space-xxxl);
+  border: none;
+}
+.icon.sizeS > * {
+  font-size: 1.4rem;
+}

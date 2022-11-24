@@ -5,16 +5,3 @@
   justify-content: center;
   align-items: center;
 }
-.container {
-  padding-top: var(--space-xxxxl);
-}
-.paddingTop {
-  padding-top: var(--space-xxl);
-}
-.form {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}

@@ -3,5 +3,8 @@
   "transformers": {
     "*.ts": ["@parcel/transformer-typescript-tsc"],
     "*.hbs": ["@anikin/parcel-transformer-handlebars"],
+  },
+  "validators": {
+    "*.{ts,tsx}": ["@parcel/validator-typescript"]
   }
 }

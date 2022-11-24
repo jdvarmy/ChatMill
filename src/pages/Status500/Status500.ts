@@ -1,11 +1,11 @@
 import layout from '../../layout/layout';
 import View from '../../packages/View';
-import { LinkPropsType } from '../../templates/link/link';
 import status500Hbs from './status500.hbs';
 import css from '../../layout/layout.css';
+import Link from '../../components/Link/Link';
 
 type Props = {
-  link: LinkPropsType;
+  link: Link;
 };
 
 export default class Status500 extends View<Props> {

@@ -1,7 +1,7 @@
 .activeTextFieldLabel,
 .active .activeTextFieldLabel {
   color: var(--color-bg-primary);
-  transform: translate(14px, -9px) scale(0.75);
+  transform: translate(14px, -9px) scale(0.75) !important;
   max-width: calc(133% - var(--space-xl));
 }
 .activeTextFieldFieldset,

@@ -3,10 +3,18 @@ import messengerHbs from './messenger.hbs';
 import Button from '../../../components/Button/Button';
 import TextField from '../../../components/TextField/TextField';
 import css from '../chat.css';
+import { StoreType } from '../../../packages/Store/Store';
 
 type Props = {
   button: Button;
+  addUser: TextField;
+  addUserBtn: Button;
+  removeUserBtn: Button;
   message: TextField;
+  messages?: StoreType['messages'];
+  user?: StoreType['user'];
+  chats?: StoreType['chats'];
+  activeChatId?: StoreType['activeChatId'];
 };
 
 export default class Messenger extends View<Props> {
@@ -17,6 +25,6 @@ export default class Messenger extends View<Props> {
   }
 
   public render(): DocumentFragment | string {
-    return this.compile(messengerHbs());
+    return this.compile(messengerHbs(this.props.messages, this.props.user?.id));
   }
 }
