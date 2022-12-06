@@ -22,7 +22,6 @@
 Билдит докер образ и запускает его
 
 
-
-
-
-#### Приложение развернуто на сервере [Netlify по адресу](https://magnificent-kelpie-71b787.netlify.app)
+#### Приложение развернуто на сервисе [Netlify по адресу](https://magnificent-kelpie-71b787.netlify.app)
+#### Приложение развернуто на сервисе [Rerender по адресу](https://chat-ovsf.onrender.com/)
+на Rerender есть странности, но если попробовать сбилдить докер image то все норм npm run docker
