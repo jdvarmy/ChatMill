@@ -3,6 +3,7 @@ import Handlebars from 'handlebars';
 import css from './link.css';
 import { Router } from '../../packages/Router/Router';
 import { EventType } from '../../types';
+import styleButton from '../../components/Button/button.css';
 
 export type LinkProps = {
   text: string;
@@ -18,7 +19,7 @@ export default class Link extends View<LinkProps> {
     super('a', props);
 
     const element = this.element as HTMLLinkElement;
-    element.classList.add(css[props.type || 'link']);
+    element.classList.add(Object.assign(css, styleButton)[props.type || 'link']);
     props.size === 's' && element.classList.add(css.sizeS);
     element.href = props.href || '/messenger';
 
