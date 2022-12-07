@@ -1,7 +1,7 @@
 import { findParentNode } from '../findParentNode';
 import { addRemoveAlert, addRemoveClass, getPropsInputElement, validation } from './valudator';
 
-export function handleClick<K extends string | number | symbol, V = any>(e: MouseEvent): Record<K, V> | false {
+export function handleClick<K extends string | number | symbol, V = never>(e: MouseEvent): Record<K, V> | false {
   const form = findParentNode(e.target, 'form') as HTMLFormElement;
   if (form) {
     const data: Record<K, V> = {} as Record<K, V>;
