@@ -18,10 +18,13 @@
 ### `npm run test`
 Запуск тестов Mocha & Chai
 
-### `npm run docker`
-Билдит докер образ и запускает его
+### `npm run docker:build`
+Билдит докер образ
+
+### `npm run docker:run`
+Запускает докер образ
 
 
 #### Приложение развернуто на сервисе [Netlify по адресу](https://magnificent-kelpie-71b787.netlify.app)
 #### Приложение развернуто на сервисе [Rerender по адресу](https://chat-ovsf.onrender.com/)
-на Rerender есть странности, но если попробовать сбилдить докер image то все норм npm run docker
+на Rerender есть странности (постоянно везде просит ввести данные банковской карты), но если попробовать сбилдить докер image то все норм npm run docker
