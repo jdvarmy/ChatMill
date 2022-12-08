@@ -2,6 +2,7 @@ import css from '../chat.css';
 import avatar from '../../../../static/images/avatars/4.jpg';
 import { searchIcon, trashIcon } from '../../../utils/icons';
 import { staticUrl } from '../../../api/api';
+import styleButton from '../../../components/Button/button.css';
 
 export default function userChatsHbs(): string {
   return `
@@ -63,7 +64,7 @@ export default function userChatsHbs(): string {
             <div class="${css.lastMessage}">{{this.lastMessage.content}}</div>
           </div>
           {{#if this.unreadCount}}<span class="${css.unreadCount}">{{this.unreadCount}}</span>{{/if}}
-          <button class="${css.button} ${css.buttonIcon} button-trash">${trashIcon}</button>
+          <button class="${styleButton.button} ${css.buttonIcon} button-trash">${trashIcon}</button>
         </div>
       {{/each}}
     </div>

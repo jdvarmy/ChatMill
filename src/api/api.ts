@@ -74,7 +74,7 @@ const baseRequest = <R>({
   });
 };
 
-const api: { get: HTTPMethod; post: HTTPMethod; put: HTTPMethod; delete: HTTPMethod } = {
+const api: Record<RequestMethod, HTTPMethod> = {
   get: (url, data, config) => {
     const queryUrl = data ? `${url}${qs.stringify(data, { addQueryPrefix: true })}` : url;
 
